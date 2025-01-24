@@ -9,7 +9,7 @@ type GithubGraphProps = {
   colorPallete?: string[];
 };
 
-export const GithubGraph = ({
+const GithubGraph = ({
   username,
   blockMargin,
   colorPallete,
@@ -66,3 +66,5 @@ async function fetchContributionData(username: string): Promise<Activity[]> {
   }
   return responseBody.data;
 }
+
+export default GithubGraph
