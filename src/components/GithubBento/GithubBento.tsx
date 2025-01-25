@@ -1,11 +1,11 @@
-import GithubGraph from "../../GithubGraph";
+import GithubGraph from "../GithubGraph";
 import { data } from "./data";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
 import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitGraph, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser } from "lucide-react";
 
 const GithubBento = () => {
     return (
-        <div className="h-164 w-264 mt-6 p-2 bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 shadow-lg shadow-blue-700/60  rounded-3xl">
+        <div className="h-164 w-264 mt-6 p-2 bg-gradient-to-br from-[#42a59f] via-[#72e0ac] to-[#42a59f] shadow-lg shadow-[#42a59f]/60  rounded-3xl">
             <div className="h-full w-full rounded-2xl bg-[#e8e8e8] flex flex-col p-2">
 
                 {/* upper section */}
@@ -152,6 +152,8 @@ const GithubBento = () => {
                     <GithubGraph username="benedicti0n" blockMargin={4} />
                 </div>
             </div>
+
+
         </div >
     );
 };
