@@ -6,28 +6,28 @@ body {
 
 @font-face {
   font-family: "ChivoRegular";
-  src: url("../public/Fonts/Chivo/static/Chivo-Regular.ttf") format("truetype");
+  src: url("/Fonts/Chivo/static/Chivo-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "ChivoThin";
-  src: url("../public/Fonts/Chivo/static/Chivo-Thin.ttf") format("truetype");
+  src: url("/Fonts/Chivo/static/Chivo-Thin.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "ChivoMedium";
-  src: url("../public/Fonts/Chivo/static/Chivo-Medium.ttf") format("truetype");
+  src: url("/Fonts/Chivo/static/Chivo-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "ChivoBold";
-  src: url("../public/Fonts/Chivo/static/Chivo-Bold.ttf") format("truetype");
+  src: url("/Fonts/Chivo/static/Chivo-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
