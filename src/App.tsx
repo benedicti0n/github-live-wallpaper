@@ -1,26 +1,9 @@
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
-import React, { useRef } from 'react';
-import { GithubGraph } from './components/ui/github';
-
-
+import Homepage from "./components/Homepage";
 const App = () => {
-  const componentRef = useRef();
-
   return (
-    <React.Fragment>
-      <div ref={componentRef}>
-        <GithubGraph username="benedicti0n" />
-      </div>
-      <button onClick={() => exportComponentAsJPEG(componentRef)}>
-        Export As JPEG
-      </button>
-      <button onClick={() => exportComponentAsPDF(componentRef)}>
-        Export As PDF
-      </button>
-      <button onClick={() => exportComponentAsPNG(componentRef)}>
-        Export As PNG
-      </button>
-    </React.Fragment>
+    <div className="w-full min-h-screen flex justify-center bg-[#e8e8e8] relative">
+      <Homepage />
+    </div>
   );
 };
 
