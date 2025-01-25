@@ -3,3 +3,31 @@
 body {
   background-color: #e8e8e8;
 }
+
+@font-face {
+  font-family: "ChivoRegular";
+  src: url("../public/Fonts/Chivo/static/Chivo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ChivoThin";
+  src: url("../public/Fonts/Chivo/static/Chivo-Thin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ChivoMedium";
+  src: url("../public/Fonts/Chivo/static/Chivo-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ChivoBold";
+  src: url("../public/Fonts/Chivo/static/Chivo-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
