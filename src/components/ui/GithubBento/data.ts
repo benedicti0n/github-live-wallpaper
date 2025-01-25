@@ -8,8 +8,8 @@ export const data = {
     time: '3:45 PM (UTC-8)', // Current time in the place
     followers: '1.2k',
     wallpaper: 'https://fakeimg.pl/800x200/', // Placeholder wallpaper image URL
-    currentStreak: '45 days',
-    longestStreak: '120 days',
+    currentStreak: '45',
+    longestStreak: '120',
     commits: '3,456',
     totalCommits: '23423',
     totalStars: '789',
@@ -18,16 +18,16 @@ export const data = {
         number: '32',
         orgs: [
             {
-                orgLogo: 'https://fakeimg.pl/50x50/?text=OSL', // Logo for "Open Source Lovers"
-                orgName: 'open-source-lovers'
+                orgLogo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/microsoft-icon.png', // Logo for "Open Source Lovers"
+                orgName: 'MicroHard'
             },
             {
-                orgLogo: 'https://fakeimg.pl/50x50/?text=FM', // Logo for "Frontend Masters"
-                orgName: 'frontend-masters'
+                orgLogo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/arc-browser-icon.png', // Logo for "Frontend Masters"
+                orgName: 'B-ark'
             },
             {
-                orgLogo: 'https://fakeimg.pl/50x50/?text=D4D', // Logo for "Devs 4 Devs"
-                orgName: 'devs4devs'
+                orgLogo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-color-icon.png', // Logo for "Devs 4 Devs"
+                orgName: 'Gugul'
             }
         ]
     }
