@@ -1,66 +1,68 @@
 import GithubGraph from "../../GithubGraph";
-import "./GithubBento.css"
 import { data } from "./Data";
+import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
 
 const GithubBento = () => {
     return (
-        <div className="h-132 w-232 mt-6 p-2 bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 shadow-lg shadow-blue-700/60  rounded-3xl">
-            <div className="h-full w-full rounded-2xl bg-white flex flex-col">
+        <div className="h-164 w-232 mt-6 p-2 bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 shadow-lg shadow-blue-700/60  rounded-3xl">
+            <div className="h-full w-full rounded-2xl bg-[#e8e8e8] flex flex-col p-2">
 
                 {/* upper section */}
-                <div className="h-6/10 w-full bg-amber-400 mb-2 rounded-t-2xl flex">
+                <div className="h-7/10 w-full mb-2 rounded-t-2xl flex">
 
                     {/* profile section and stats */}
-                    <div className="w-8/10 bg-pink-500 rounded-tl-2xl mr-2 p-2">
+                    <div className="w-8/10 rounded-tl-2xl mr-2 pb-2">
 
                         {/* upper section */}
-                        <div className="w-full h-1/2 bg-blue-200 flex justify-between">
-                            <div className="w-1/6 mr-2">
-                                <img src={data.profilePic} alt="" className="w-full h-full" />
+                        <div className="w-full h-1/2 flex justify-between">
+                            <div className="w-1/6 mr-2 flex flex-col items-center">
+                                <img src="https://avatars.githubusercontent.com/u/113491469?v=4" alt="" className="w-full rounded-2xl" />
+                                <img src="https://i.pinimg.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg" alt="" className="h-full w-full mt-2 rounded-xl object-cover" />
                             </div>
-                            <div className="w-2/6 bg-pink-200">
+                            <div className="w-2/6 rounded-2xl p-4" style={{ backgroundColor: `${GreenPallete[1]}` }}>
                                 {/* personal details */}
-                                <div className="h-1/2 border-2 border-black">
-                                    <h1 className="text-2xl font-bold">{data.name} <span className="text-lg font-medium">{data.pronouns}</span></h1>
+                                <div className="h-1/2 ">
+                                    <h1 className="text-2xl font-[ChivoMedium]">{data.name} <span className="text-lg font-chivo">{data.pronouns}</span></h1>
                                     <h1 className="text-lg font-medium">@{data.username}</h1>
                                 </div>
-                                <div className="h-1/2 border-2">
+                                <div className="h-1/2">
                                     <h1 className="text-sm">{data.bio}</h1>
                                 </div>
                             </div>
 
                             {/* place, time, followers */}
-                            <div className="w-2/6 h-full ml-2 bg-amber-200 flex flex-col">
+                            <div className="w-2/6 h-full ml-2 flex flex-col">
                                 <div className="flex h-1/2">
-                                    <div className="border-2">{data.place}</div>
-                                    <div>{data.time}</div>
+                                    <div className="rounded-xl p-4 mr-2 mb-2" style={{ backgroundColor: `${GreenPallete[2]}` }}>{data.place}</div>
+                                    <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${GreenPallete[2]}` }}>{data.time}</div>
                                 </div>
-                                <div className="border-2 h-1/2 flex justify-center items-center">
+                                <div className="h-1/2 flex justify-center items-center rounded-xl" style={{ backgroundColor: `${GreenPallete[2]}` }}>
                                     Followers: {data.followers}
                                 </div>
                             </div>
-                            <div className="w-1/6 ml-2 bg-amber-200">
+                            <div className="w-1/6 ml-2 rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[3]}` }}>
                                 <h1>{data.currentStreak}</h1>
                             </div>
                         </div>
 
                         {/* lower section */}
-                        <div className="w-full h-1/2 bg-red-300 flex mt-2 p-2">
-                            <div className="w-1/5 bg-purple-400 mr-2">
+                        <div className="w-full h-1/2 flex mt-2">
+                            <div className="w-1/5 mr-2 rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[3]}` }}>
                                 <h1>{data.longestStreak}</h1>
                             </div>
-                            <div className="grid grid-cols-2 grid-rows-2 w-2/5 bg-purple-400 mr-2">
-                                <div className="border-2"><h1>{data.commits}</h1></div>
-                                <div className="border-2"><h1>{data.totalPRs}</h1></div>
-                                <div className="border-2"><h1>{data.totalStars}</h1></div>
-                                <div className="border-2"><h1>{data.totalCommits}</h1></div>
+                            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-2/5 mr-2">
+                                <div className="rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[2]}` }}><h1>{data.commits}</h1></div>
+                                <div className="rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[2]}` }}><h1>{data.totalPRs}</h1></div>
+                                <div className="rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[2]}` }}><h1>{data.totalStars}</h1></div>
+                                <div className="rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[2]}` }}><h1>{data.totalCommits}</h1></div>
                             </div>
-                            <div className="w-2/5 bg-purple-400 flex">
-                                <h1 className="w-1/4 border-2">{data.contributedTo.number}</h1>
+                            <div className="w-2/5 flex p-4 rounded-xl" style={{ backgroundColor: `${GreenPallete[1]}` }}>
+                                <h1 className="
+                                w-1/4 rounded-lg p-4 mr-2" style={{ backgroundColor: `${GreenPallete[3]}` }}>{data.contributedTo.number}</h1>
                                 <div className="w-3/4 flex flex-col justify-between">
                                     {data.contributedTo.orgs.map((org) => (
                                         <div key={org.orgName} className="flex items-center">
-                                            <img src={org.orgLogo} alt={org.orgName} className="w-8 h-8 mr-2" />
+                                            <img src={org.orgLogo} alt={org.orgName} className="w-8 h-8 mr-2 rounded-md" />
                                             <span>{org.orgName}</span>
                                         </div>
                                     ))}
@@ -70,17 +72,17 @@ const GithubBento = () => {
                         </div>
                     </div>
 
-                    <div className="w-2/10 bg-pink-500 rounded-tr-2xl p-2">
-                        <img src={data.wallpaper} alt="" className="h-full w-full rounded-tr-2xl" />
+                    <div className="w-2/10 rounded-xl">
+                        <img src="https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg" alt="" className="h-full w-full rounded-xl object-cover" />
                     </div>
                 </div>
 
                 {/* github calender */}
-                <div className="h-4/10 w-full bg-red-500 rounded-b-2xl flex justify-center items-center">
+                <div className="h-3/10 w-full rounded-xl flex justify-center items-center" style={{ backgroundColor: `${GreenPallete[4]}` }}>
                     <GithubGraph username="benedicti0n" blockMargin={4} />
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
