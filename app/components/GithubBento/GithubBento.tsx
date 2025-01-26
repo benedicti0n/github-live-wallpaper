@@ -1,5 +1,8 @@
+"use client"
+
 import { toJpeg, toPng } from 'html-to-image';
 import React, { useRef, useCallback } from 'react';
+import Image from 'next/image';
 
 import GithubGraph from "../GithubGraph";
 import { data } from "./data";
@@ -72,8 +75,8 @@ const GithubBento = () => {
                                 {/* upper section */}
                                 <div className="w-full h-1/2 flex justify-between">
                                     <div className="w-1/6 mr-2 flex flex-col items-center">
-                                        <img src="https://avatars.githubusercontent.com/u/113491469?v=4" alt="" className="w-full rounded-2xl" crossOrigin="anonymous" />
-                                        <img src={`${corsProxy}https://i.pinimg.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg`} alt="" className="h-full w-full mt-2 rounded-xl object-cover" crossOrigin="anonymous" />
+                                        <Image src="https://avatars.githubusercontent.com/u/113491469?v=4" alt="" className="w-full rounded-2xl" crossOrigin="anonymous" width={1024} height={1024} />
+                                        <Image src={`${corsProxy}https://i.pinImage.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg`} alt="" className="h-full w-full mt-2 rounded-xl object-cover" crossOrigin="anonymous" width={1024} height={1024} />
                                     </div>
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[1]}` }}>
                                         {/* personal details */}
@@ -108,7 +111,7 @@ const GithubBento = () => {
                                                     {data.followers}
                                                 </h1>
                                             </div>
-                                            <img src={`${corsProxy}https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" crossOrigin="anonymous" />
+                                            <Image src={`${corsProxy}https://i.pinImage.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" crossOrigin="anonymous" width={1024} height={1024} />
                                         </div>
                                     </div>
                                     <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${GreenPallete[3]}` }}>
@@ -152,7 +155,7 @@ const GithubBento = () => {
                                             <div className="w-3/4 flex flex-col justify-between">
                                                 {data.contributedTo.orgs.map((org) => (
                                                     <div key={org.orgName} className="flex items-center">
-                                                        <img src={`${corsProxy}${org.orgLogo}`} alt={org.orgName} className="w-6 h-6 mr-2" crossOrigin="anonymous" />
+                                                        <Image src={`${corsProxy}${org.orgLogo}`} alt={org.orgName} className="w-6 h-6 mr-2" crossOrigin="anonymous" width={1024} height={1024} />
                                                         <span className="font-[ChivoRegular] text-base">{org.orgName}</span>
                                                     </div>
                                                 ))}
@@ -163,7 +166,7 @@ const GithubBento = () => {
                                 </div>
                             </div>
 
-                            <img src={`${corsProxy}https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg`} alt="" className="w-2/10 h-full rounded-xl object-cover" crossOrigin="anonymous" />
+                            <Image src={`${corsProxy}https://i.pinImage.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg`} alt="" className="w-2/10 h-full rounded-xl object-cover" crossOrigin="anonymous" width={1024} height={1024} />
                         </div>
 
                         {/* github calender */}
