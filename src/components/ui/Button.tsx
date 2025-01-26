@@ -18,9 +18,9 @@ const Button = (props: ButtonProps) => {
                 <div
                     className={`group-hover:scale-100 flex group-hover:text-blue-500 text-blue-600 gap-1`}
                 >
-                    {props.icon}
                     {props.text}
                     {props.children}
+                    {props.icon}
                 </div>
             </div>
         </button>
