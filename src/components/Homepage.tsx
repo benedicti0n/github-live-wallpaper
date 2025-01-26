@@ -2,8 +2,6 @@ import Navbar from './Navbar';
 import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
-import GithubUserDetails from './GithubBento/GithubUserDetails';
-import ComponentToImage from '../utils/ComponentToImage';
 
 const Homepage = () => {
     const fetchGithubStats = () => {
@@ -11,9 +9,9 @@ const Homepage = () => {
     };
 
     return (
-        <div className="w-3/4 min-h-screen py-2 px-4 relative">
+        <div className="w-3/4 min-h-screen py-2 px-4 border-2 border-amber-400 relative">
             <Navbar />
-            <div className="w-full h-full flex flex-col justify-center items-center">
+            <div className="w-full h-full flex flex-col justify-center items-center border-2 border-amber-600">
                 <h1 className="text-5xl font-extrabold bg-gradient-to-br from-blue-900 via-blue-600 to-blue-900 bg-clip-text text-transparent">
                     Github Live Wallpaper
                 </h1>
@@ -23,9 +21,6 @@ const Homepage = () => {
                     <Button text="Search" />
                 </div>
                 <GithubBento />
-                {/* <ComponentToImage /> */}
-
-                {/* <GithubUserDetails /> */}
             </div>
         </div>
     );
