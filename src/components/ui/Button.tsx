@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 interface ButtonProps {
-    text: string;
+    text?: string;
     icon?: ReactNode;
     onClickFunction?: () => void;
+    children?: ReactNode
 }
 
 const Button = (props: ButtonProps) => {
@@ -19,6 +20,7 @@ const Button = (props: ButtonProps) => {
                 >
                     {props.icon}
                     {props.text}
+                    {props.children}
                 </div>
             </div>
         </button>
