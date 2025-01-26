@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import Button from './ui/Button'
-import Sparkle from '../icons/Sparkle'
+import { LucideLogIn } from "lucide-react";
 
 const Navbar = () => {
     return (
@@ -12,7 +12,7 @@ const Navbar = () => {
                 </div>
                 <SignedOut>
                     <Button
-                        icon={<Sparkle />}
+                        icon={<LucideLogIn />}
                     >
                         <SignInButton mode="modal" />
                     </Button>
