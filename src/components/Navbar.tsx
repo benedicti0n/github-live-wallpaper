@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import Button from './ui/Button'
 import Sparkle from '../icons/Sparkle'
 
@@ -9,9 +10,18 @@ const Navbar = () => {
                     <img src="/logo.png" alt="" className='h-full' />
                     <h1 className='font-semibold text-blue-600'>Github Live Wallpaper</h1>
                 </div>
-                <Button text="SignIn" icon={<Sparkle />} />
+                <SignedOut>
+                    <Button
+                        icon={<Sparkle />}
+                    >
+                        <SignInButton mode="modal" />
+                    </Button>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
             </div>
-        </div>
+        </div >
     )
 }
 
