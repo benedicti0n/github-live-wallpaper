@@ -3,6 +3,7 @@ export const BluePallete = {
     2: '#2686ff',
     3: '#265bff',
     4: '#2630ff',
+    textColor: "#fff"
 }
 
 export const GreenPallete = {
@@ -10,6 +11,7 @@ export const GreenPallete = {
     2: '#72e0ac',
     3: '#51bea1',
     4: '#42a59f',
+    textColor: "#000"
 }
 
 export const PurplePallete = {
@@ -17,4 +19,5 @@ export const PurplePallete = {
     2: '#dec0f1',
     3: '#b79ced',
     4: '#957fef',
+    textColor: "#000"
 }
