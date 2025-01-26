@@ -4,7 +4,7 @@ import React, { useRef, useCallback } from 'react';
 import GithubGraph from "../GithubGraph";
 import { data } from "./data";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
-import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser } from "lucide-react";
+import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage } from "lucide-react";
 import Button from '../ui/Button';
 
 const corsProxy = "https://cors-anywhere.herokuapp.com/";
@@ -176,12 +176,12 @@ const GithubBento = () => {
             </div>
 
 
-            <div className='w-full flex justify-center items-center border-2'>
+            <div className='w-full flex justify-center items-center'>
                 <div className='mx-2'>
-                    <Button text='Export As JPEG' onClickFunction={handleExportToJpeg} />
+                    <Button text='Export As JPEG' onClickFunction={handleExportToJpeg} icon={<LucideFileImage />} />
                 </div>
                 <div className='mx-2'>
-                    <Button text="Export As PNG" onClickFunction={handleExportToPng} />
+                    <Button text="Export As PNG" onClickFunction={handleExportToPng} icon={<LucideImage />} />
                 </div>
             </div>
         </React.Fragment>
