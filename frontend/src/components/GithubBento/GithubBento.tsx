@@ -1,20 +1,21 @@
 import { toJpeg, toPng } from 'html-to-image';
 import React, { useRef, useCallback } from 'react';
+import { UserDetails } from './types';
 
 import GithubGraph from "../GithubGraph";
-import { data } from "./data";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
-import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot } from "lucide-react";
+import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot, LucideCode } from "lucide-react";
 import Button from '../ui/Button';
 
-const colorPallete = PurplePallete;
+const colorPallete = BluePallete;
 const corsProxy = "https://cors-anywhere.herokuapp.com/";
 
-const GithubBento = () => {
+const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const componentRef = useRef<HTMLDivElement>(null)
-    const handleExportToPng = useCallback(() => {
-        console.log('1');
 
+    githubData = githubData.userDetails.userDetails
+
+    const handleExportToPng = useCallback(() => {
         if (componentRef.current === null) {
             return
         }
@@ -80,34 +81,35 @@ const GithubBento = () => {
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[1]}` }}>
                                         {/* personal details */}
                                         <div className="h-1/2 ">
-                                            <h1 className="text-3xl font-[ChivoMedium]">{data.name} <span className="text-sm font-[ChivoRegular]">{data.pronouns}</span></h1>
-                                            <h1 className="text-lg font-[ChivoRegular]">@{data.username}</h1>
+                                            <h1 className="text-3xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
+                                            {/* help */}
+                                            <h1 className="text-xl font-[ChivoRegular]">@{githubData.username}</h1>
                                         </div>
-                                        <h1 className="h-1/2 text-sm font-[ChivoRegular]">{data.bio}</h1>
+                                        <h1 className="h-1/2 text-sm font-[ChivoRegular] mt-4">{githubData.bio}</h1>
                                     </div>
 
                                     {/* place, time, followers */}
                                     <div className="w-2/6 h-full ml-2 flex flex-col">
                                         <div className="flex h-1/2">
-                                            <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                                <h1 className="w-full flex text-xs font-[ChivoThin] "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
-                                                <h1 className="text-sm pt-2 font-[ChivoMedium]">
-                                                    {data.place}
+                                            <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
+                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
+                                                <h1 className="text-xl pt-2 font-[ChivoMedium] ">
+                                                    {githubData.location}
                                                 </h1>
                                             </div>
-                                            <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                                <h1 className="w-full flex text-xs font-[ChivoThin]"><LucideCircleDot className="h-4 w-4 mr-1" />Issues</h1>
-                                                <h1 className="text-sm pt-2 font-[ChivoMedium]">
-                                                    {data.time}
+                                            <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
+                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideCircleDot className="h-4 w-4 mr-1" />Issues</h1>
+                                                <h1 className="text-xl pt-2 font-[ChivoMedium]">
+                                                    {githubData.issuesCount}
                                                 </h1>
                                             </div>
                                         </div>
 
                                         <div className="flex h-1/2">
                                             <div className="h-full rounded-xl p-4 mr-2 mb-2 flex flex-col" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                                <h1 className="w-full flex text-xs font-[ChivoThin]"> <LucideUser className="h-4 w-4 mr-1" />Followers</h1>
+                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center"> <LucideUser className="h-4 w-4 mr-1" />Followers</h1>
                                                 <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                    {data.followers}
+                                                    {githubData.followersCount}
                                                 </h1>
                                             </div>
                                             <img src={`${corsProxy}https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" crossOrigin="anonymous" />
@@ -115,7 +117,8 @@ const GithubBento = () => {
                                     </div>
                                     <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[3]}` }}>
                                         <h1 className="font-[ChivoThin] text-base">Current Streak</h1>
-                                        <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{data.currentStreak}</h1>
+                                        <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{ }</h1>
+                                        {/* help */}
                                     </div>
                                 </div>
 
@@ -123,25 +126,26 @@ const GithubBento = () => {
                                 <div className="w-full h-1/2 flex mt-2">
                                     <div className="w-1/5 mr-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[3]}` }}>
                                         <h1 className="font-[ChivoThin] text-base">Longest Streak</h1>
-                                        <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{data.longestStreak}</h1>
+                                        <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{ }</h1>
+                                        {/* help */}
                                     </div>
 
                                     <div className="grid grid-cols-2 grid-rows-2 gap-2 w-2/5 mr-2">
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideGitCommit className="h-6 w-6 mr-1" />Commits</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{data.commits}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalCommits}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"> <LucideGitPullRequest className="h-6 w-6 mr-1" />PRs</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{data.totalPRs}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.pullRequestsCount}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideStar className="h-6 w-6 mr-1" />Total Stars</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{data.totalStars}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalStars}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                            <h1 className="w-full flex text-sm font-[ChivoThin]">  <LucideGitCommitVertical className="h-6 w-6 mr-1" />Total Commits</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{data.totalCommits}</h1>
+                                            <h1 className="w-full flex text-sm font-[ChivoThin]">  <LucideCode className="h-6 w-6 mr-1" />Total Repos</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalRepositories}</h1>
                                         </div>
                                     </div>
 
@@ -149,13 +153,13 @@ const GithubBento = () => {
                                         <h1 className="w-full flex font-[ChivoThin] text-base"><LucideGitBranch className="h-6 w-6 mr-1" />Total Contribution and Orgs</h1>
                                         <div className="h-full flex mt-4">
                                             <h1 className="w-1/4 mr-6 text-5xl font-[ChivoMedium]">
-                                                {data.contributedTo.number}
+                                                {githubData.contributedReposCount}
                                             </h1>
                                             <div className="w-3/4 flex flex-col justify-between">
-                                                {data.contributedTo.orgs.map((org) => (
-                                                    <div key={org.orgName} className="flex items-center">
-                                                        <img src={`${corsProxy}${org.orgLogo}`} alt={org.orgName} className="w-6 h-6 mr-2" crossOrigin="anonymous" />
-                                                        <span className="font-[ChivoRegular] text-base">{org.orgName}</span>
+                                                {githubData.contributedOrganizations && githubData.contributedOrganizations.map((org) => (
+                                                    <div key={org.name} className="flex items-center">
+                                                        <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
+                                                        <span className="font-[ChivoRegular] text-base">{org.name}</span>
                                                     </div>
                                                 ))}
                                                 <LucideEllipsis className="w-6 h-6" />

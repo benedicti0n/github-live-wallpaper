@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { UserDetails } from './GithubBento/types';
 
 import Navbar from './Navbar';
 import Input from './ui/Input';
@@ -11,6 +12,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const Homepage = () => {
     const [username, setUsername] = useState('')
+    const [githubData, setGithubData] = useState<UserDetails | null>(null)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value)
@@ -37,8 +39,10 @@ const Homepage = () => {
                 throw new Error('Failed to fetch GitHub stats');
             }
 
-            const data = await response.json();
-            console.log('GitHub Stats:', data);
+            const data: UserDetails = await response.json();
+            console.log(data);
+
+            setGithubData(data)
         } catch (error) {
             console.error('Error fetching GitHub stats:', error.message);
         }
@@ -67,7 +71,8 @@ const Homepage = () => {
                     />
                     <Button text="Search" icon={<LucideSearch />} onClickFunction={handleSearch} />
                 </div>
-                <GithubBento />
+
+                {githubData ? <GithubBento githubData={githubData} /> : <h1>cant find username</h1>}
             </div>
         </div>
     );
