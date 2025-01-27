@@ -4,7 +4,7 @@ import React, { useRef, useCallback } from 'react';
 import GithubGraph from "../GithubGraph";
 import { data } from "./data";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
-import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage } from "lucide-react";
+import { LucideCalendar, LucideClock, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitCommitVertical, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot } from "lucide-react";
 import Button from '../ui/Button';
 
 const colorPallete = PurplePallete;
@@ -96,7 +96,7 @@ const GithubBento = () => {
                                                 </h1>
                                             </div>
                                             <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                                <h1 className="w-full flex text-xs font-[ChivoThin]"><LucideClock className="h-4 w-4 mr-1" />Time</h1>
+                                                <h1 className="w-full flex text-xs font-[ChivoThin]"><LucideCircleDot className="h-4 w-4 mr-1" />Issues</h1>
                                                 <h1 className="text-sm pt-2 font-[ChivoMedium]">
                                                     {data.time}
                                                 </h1>
