@@ -25,7 +25,7 @@ const Homepage = () => {
         try {
             console.log(username);
 
-            const response = await fetch(`${serverUrl}/fetchProfileStats`, {
+            const response = await fetch(`${serverUrl}/api/v1/fetchGithubStats`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": 'application/json',
