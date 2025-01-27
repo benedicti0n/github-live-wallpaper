@@ -1,4 +1,13 @@
-const Input = () => {
+import React from "react";
+
+interface InputProps {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    placeholder: string;
+}
+
+const Input = (props: InputProps) => {
     return (
         <div className=" flex justify-center items-center relative rounded-xl transition-shadow duration-300 ease-in-out focus-within:shadow-lg focus-within:shadow-blue-700/60">
             {/* Outer gradient ring */}
@@ -11,7 +20,10 @@ const Input = () => {
             <input
                 type="text"
                 name="text"
-                placeholder="Search here..."
+                value={props.value}
+                onChange={props.onChange}
+                onKeyDown={props.onKeyDown}
+                placeholder={props.placeholder}
                 autoComplete="off"
                 className="relative bg-transparent text-zinc-600 outline-none placeholder:text-zinc-600 placeholder:opacity-50 px-4 py-2 w-full focus:ring-0 focus:outline-none"
             />
