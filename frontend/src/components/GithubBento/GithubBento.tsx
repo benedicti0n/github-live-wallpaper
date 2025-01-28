@@ -4,7 +4,7 @@ import { UserDetails } from './types';
 
 import GithubGraph from "../GithubGraph";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
-import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot, LucideCode, LucideFolderGit, LucideGitCommitVertical } from "lucide-react";
+import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical } from "lucide-react";
 import Button from '../ui/Button';
 
 const colorPallete = PurplePallete;
@@ -16,7 +16,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     // @ts-expect-error: Nested userDetails structure
     const streakStats = githubData.streakStats
     // @ts-expect-error: Nested userDetails structure
-    githubData = githubData.userDetails.userDetails
+    const userStats = githubData.userDetails
 
     const handleExportToPng = useCallback(() => {
         if (componentRef.current === null) {
@@ -83,10 +83,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     </div>
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[1]}` }}>
                                         {/* personal details */}
-                                        <h1 className="text-2xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
+                                        <h1 className="text-2xl font-[ChivoMedium]">{userStats.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
                                         {/* help */}
-                                        <h1 className="text-lg font-[ChivoRegular]">@{githubData.username}</h1>
-                                        <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{githubData.bio}</h1>
+                                        <h1 className="text-lg font-[ChivoRegular]">@{userStats.username}</h1>
+                                        <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{userStats.bio}</h1>
                                     </div>
 
                                     {/* place, time, followers */}
@@ -95,13 +95,13 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                             <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                                 <h1 className="w-full flex text-sm font-[ChivoThin] items-center "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
                                                 <h1 className="text-sm pt-2 font-[ChivoMedium] ">
-                                                    {githubData.location}
+                                                    {userStats.location}
                                                 </h1>
                                             </div>
                                             <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                                 <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideFolderGit className="h-4 w-4 mr-1" />Repos</h1>
                                                 <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                    {githubData.totalRepositories}
+                                                    {userStats.totalRepositories}
                                                 </h1>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                             <div className="h-full rounded-xl p-4 mr-2 mb-2 flex flex-col" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                                 <h1 className="w-full flex text-sm font-[ChivoThin] items-center"> <LucideUser className="h-4 w-4 mr-1" />Followers</h1>
                                                 <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                    {githubData.followersCount}
+                                                    {userStats.followersCount}
                                                 </h1>
                                             </div>
                                             <img src={`${corsProxy}https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" crossOrigin="anonymous" />
@@ -134,15 +134,15 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     <div className="grid grid-cols-2 grid-rows-2 gap-2 w-2/5 mr-2">
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideGitCommit className="h-6 w-6 mr-1" />Commits</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalCommits}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalCommits}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"> <LucideGitPullRequest className="h-6 w-6 mr-1" />PRs</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.pullRequestsCount}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.pullRequestsCount}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideStar className="h-6 w-6 mr-1" />Total Stars</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalStars}</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalStars}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                             <h1 className="w-full flex text-sm font-[ChivoThin] items-center">  <LucideGitCommitVertical className="h-6 w-6 mr-1" />Total Commits</h1>
@@ -154,10 +154,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                         <h1 className="w-full flex font-[ChivoThin] text-base"><LucideGitBranch className="h-6 w-6 mr-1" />Total Contribution and Orgs</h1>
                                         <div className="h-full flex mt-4">
                                             <h1 className="w-1/4 mr-6 text-5xl font-[ChivoMedium]">
-                                                {githubData.contributedReposCount}
+                                                {userStats.contributedReposCount}
                                             </h1>
                                             <div className="w-3/4 flex flex-col justify-between">
-                                                {githubData.contributedOrganizations && githubData.contributedOrganizations.map((org) => (
+                                                {userStats.contributedOrganizations && userStats.contributedOrganizations.map((org) => (
                                                     <div key={org.name} className="flex items-center">
                                                         <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
                                                         <span className="font-[ChivoRegular] text-base">{org.name}</span>

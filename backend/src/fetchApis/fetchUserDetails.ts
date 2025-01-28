@@ -2,7 +2,7 @@ import { UserDetails, UserData, GitHubResponse } from "../types/types";
 import { userDetailsQuery } from "../query/userDetailsQuery";
 import { githubGraphql } from "./githubGraphql";
 
-export const fetchUserDetails = async (username: string): Promise<{ userDetails: UserDetails }> => {
+export const fetchUserDetails = async (username: string): Promise<UserDetails> => {
     const query = `
       query ($username: String!) {
         user(login: $username) {
@@ -16,11 +16,7 @@ export const fetchUserDetails = async (username: string): Promise<{ userDetails:
         variables: { username },
     });
 
-    console.log('hi3');
-    console.log(response);
-
     const { user } = response;
-    // console.log(user);
 
     const userDetails: UserDetails = getUserStats(user);
     userDetails.username = username;
@@ -29,9 +25,7 @@ export const fetchUserDetails = async (username: string): Promise<{ userDetails:
     console.log(userDetails);
 
 
-    return {
-        userDetails,
-    };
+    return userDetails;
 };
 
 const getUserStats = (userData: UserData): UserDetails => {
