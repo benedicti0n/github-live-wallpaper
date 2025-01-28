@@ -6,13 +6,14 @@ import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
 
-import { LucideSearch } from 'lucide-react';
+import { Heading1, LucideSearch } from 'lucide-react';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const Homepage = () => {
+    const [loading, setLoading] = useState<boolean>(false)
     const [username, setUsername] = useState('')
-    const [githubData, setGithubData] = useState<UserDetails | null>(null)
+    const [githubData, setGithubData] = useState<UserDetails | null>()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value)
@@ -25,8 +26,7 @@ const Homepage = () => {
         // }
 
         try {
-            console.log(username);
-
+            setLoading(true)
             const response = await fetch(`${serverUrl}/api/v1/fetchGithubStats`, {
                 method: 'POST',
                 headers: {
@@ -36,6 +36,8 @@ const Homepage = () => {
             })
 
             if (!response.ok) {
+                setGithubData(null)
+                setLoading(false)
                 throw new Error('Failed to fetch GitHub stats');
             }
 
@@ -43,6 +45,7 @@ const Homepage = () => {
             console.log(data);
 
             setGithubData(data)
+            setLoading(false)
         } catch (error) {
             console.error('Error fetching GitHub stats:', error.message);
         }
@@ -72,7 +75,13 @@ const Homepage = () => {
                     <Button text="Search" icon={<LucideSearch />} onClickFunction={handleSearch} />
                 </div>
 
-                {githubData ? <GithubBento githubData={githubData} /> : <h1>cant find username</h1>}
+                {loading && <h1>Fetching UserDetails</h1>}
+
+                {!loading && githubData ? (
+                    <GithubBento githubData={githubData} />
+                ) : (
+                    githubData === null && <h1>User not found</h1>
+                )}
             </div>
         </div>
     );
