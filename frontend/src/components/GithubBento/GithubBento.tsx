@@ -7,12 +7,14 @@ import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
 import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot, LucideCode } from "lucide-react";
 import Button from '../ui/Button';
 
-const colorPallete = BluePallete;
+const colorPallete = PurplePallete;
 const corsProxy = "https://cors-anywhere.herokuapp.com/";
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const componentRef = useRef<HTMLDivElement>(null)
 
+    // @ts-expect-error: Nested userDetails structure
+    const streakStats = githubData.streakStats
     // @ts-expect-error: Nested userDetails structure
     githubData = githubData.userDetails.userDetails
 
@@ -118,7 +120,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     </div>
                                     <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[3]}` }}>
                                         <h1 className="font-[ChivoThin] text-base">Current Streak</h1>
-                                        <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{ }</h1>
+                                        <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{streakStats.currentStreak}</h1>
                                         {/* help */}
                                     </div>
                                 </div>
@@ -127,7 +129,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 <div className="w-full h-1/2 flex mt-2">
                                     <div className="w-1/5 mr-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[3]}` }}>
                                         <h1 className="font-[ChivoThin] text-base">Longest Streak</h1>
-                                        <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{ }</h1>
+                                        <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{streakStats.longestStreak}</h1>
                                         {/* help */}
                                     </div>
 
