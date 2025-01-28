@@ -6,7 +6,7 @@ import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
 
-import { Heading1, LucideSearch } from 'lucide-react';
+import { LucideSearch } from 'lucide-react';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
