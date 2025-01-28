@@ -253,9 +253,9 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                             <h1 className="w-1/4 mr-6 text-5xl font-[ChivoMedium]">
                                                 {userStats.contributedReposCount}
                                             </h1>
-                                            <div className="w-3/4 flex flex-col justify-between">
+                                            <div className="w-3/4 flex flex-col">
                                                 {userStats.contributedOrganizations && userStats.contributedOrganizations.map((org) => (
-                                                    <div key={org.name} className="flex items-center">
+                                                    <div key={org.name} className="flex mb-4">
                                                         <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
                                                         <span className="font-[ChivoRegular] text-base">{org.name}</span>
                                                     </div>
