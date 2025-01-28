@@ -2,7 +2,7 @@ import { UserDetails, UserData, GitHubResponse } from "../types/types";
 import { userDetailsQuery } from "../query/userDetailsQuery";
 import { githubGraphql } from "./githubGraphql";
 
-export const fetchUserDetails2 = async (username: string): Promise<{ userDetails: UserDetails }> => {
+export const fetchUserDetails = async (username: string): Promise<{ userDetails: UserDetails }> => {
     const query = `
       query ($username: String!) {
         user(login: $username) {

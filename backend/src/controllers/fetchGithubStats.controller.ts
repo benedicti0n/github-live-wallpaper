@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StreakStats } from "../types/types";
-import { fetchUserDetails2 } from "../fetchApis/fetchUserDetails2";
-import { fetchContributions2 } from "../fetchApis/fetchContribution/fetchContributions2";
+import { fetchUserDetails } from "../fetchApis/fetchUserDetails";
+import { fetchContributions } from "../fetchApis/fetchContribution/fetchContributions";
 
 export const fetchGithubStats = async (req: Request, res: Response): Promise<void> => {
     const { username } = req.body;
@@ -12,8 +12,8 @@ export const fetchGithubStats = async (req: Request, res: Response): Promise<voi
     }
 
     try {
-        const userDetails = await fetchUserDetails2(username)
-        const streakStats: StreakStats = await fetchContributions2(username)
+        const userDetails = await fetchUserDetails(username)
+        const streakStats: StreakStats = await fetchContributions(username)
 
         res.json({ userDetails, streakStats });
         return

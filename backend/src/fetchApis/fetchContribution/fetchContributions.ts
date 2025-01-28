@@ -7,7 +7,7 @@ import {
 import { fetchContributionYears } from "./fetchContributionYears";
 import { fetchYearContributions } from "./fetchYearContributions";
 
-export async function fetchContributions2(username: string): Promise<{
+export async function fetchContributions(username: string): Promise<{
     totalContributions: number;
     firstDateofContribution: string | null;
     longestStreak: number;
