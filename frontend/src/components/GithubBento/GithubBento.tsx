@@ -1,63 +1,160 @@
 import { toJpeg, toPng } from 'html-to-image';
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { UserDetails } from './types';
-
 import GithubGraph from "../GithubGraph";
-import { coolBluePalette, earthTonesPalette, forestGreenPalette, vividPurplePalette, warmSunsetPalette } from "./ColorHues";
-import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical } from "lucide-react";
+import { earthTonesPalette } from "./ColorHues";
+import {
+    LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit,
+    LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser,
+    LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical
+} from "lucide-react";
 import Button from '../ui/Button';
 
 const colorPallete = earthTonesPalette;
-const corsProxy = "https://cors-anywhere.herokuapp.com/";
+
+// List of reliable CORS proxies - if one fails, try the next
+const CORS_PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://api.codetabs.com/v1/proxy?quest=',
+    'https://corsproxy.io/?'
+];
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
-    const componentRef = useRef<HTMLDivElement>(null)
+    const componentRef = useRef<HTMLDivElement>(null);
+    const [loadedImages, setLoadedImages] = useState<{ [key: string]: string }>({});
+    const [currentProxyIndex, setCurrentProxyIndex] = useState(0);
 
     // @ts-expect-error: Nested userDetails structure
-    const streakStats = githubData.streakStats
+    const streakStats = githubData.streakStats;
     // @ts-expect-error: Nested userDetails structure
-    const userStats = githubData.userDetails
+    const userStats = githubData.userDetails;
 
-    const handleExportToPng = useCallback(() => {
-        if (componentRef.current === null) {
-            return
+    // Function to try loading image with different proxies
+    const getBase64FromUrl = async (originalUrl: string): Promise<string> => {
+        let lastError;
+
+        for (let i = currentProxyIndex; i < CORS_PROXIES.length; i++) {
+            try {
+                const proxyUrl = CORS_PROXIES[i] + encodeURIComponent(originalUrl);
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const blob = await response.blob();
+
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result as string);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                lastError = error;
+                continue;
+            }
         }
 
-        toPng(componentRef.current, { cacheBust: true, pixelRatio: 2 })
-            .then((dataUrl) => {
-                const link = document.createElement('a')
-                link.download = 'my-image-name.png'
-                link.href = dataUrl
-                link.click()
-                console.log('2');
+        console.error('All proxies failed:', lastError);
+        return '';
+    };
 
+    // Modified loadImages function to handle GitHub avatar URLs differently
+    const loadImages = async () => {
+        const imagesToLoad = {
+            decorative: [
+                'https://i.pinimg.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg',
+                'https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg',
+                'https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg'
+            ],
+            github: [
+                userStats.avatarUrl,
+                ...(userStats.contributedOrganizations?.map(org => org.avatarUrl) || [])
+            ]
+        };
+
+        const loadedImageData: { [key: string]: string } = {};
+
+        // Load GitHub images directly (they should have CORS headers)
+        await Promise.all(
+            imagesToLoad.github.map(async (url) => {
+                if (url) {
+                    try {
+                        const response = await fetch(url);
+                        const blob = await response.blob();
+                        loadedImageData[url] = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => resolve(reader.result as string);
+                            reader.readAsDataURL(blob);
+                        });
+                    } catch (error) {
+                        console.error('Error loading GitHub image:', url, error);
+                    }
+                }
             })
-            .catch((err) => {
-                console.log(err)
+        );
+
+        // Load decorative images through proxy
+        await Promise.all(
+            imagesToLoad.decorative.map(async (url) => {
+                if (url) {
+                    try {
+                        const base64 = await getBase64FromUrl(url);
+                        if (base64) {
+                            loadedImageData[url] = base64;
+                        }
+                    } catch (error) {
+                        console.error('Error loading decorative image:', url, error);
+                    }
+                }
             })
-    }, [componentRef])
+        );
 
-    const handleExportToJpeg = useCallback(() => {
-        console.log('1');
+        setLoadedImages(loadedImageData);
+    };
 
-        if (componentRef.current === null) {
-            return
+    useEffect(() => {
+        loadImages();
+    }, [userStats]);
+
+    const handleExport = useCallback(async (type: 'png' | 'jpeg') => {
+        if (!componentRef.current) return;
+
+        const options = {
+            cacheBust: true,
+            pixelRatio: 2,
+            quality: 1,
+            backgroundColor: '#e8e8e8',
+            filter: (node: HTMLElement) => {
+                if (node.tagName === 'IMG') {
+                    const imgNode = node as HTMLImageElement;
+                    const originalSrc = imgNode.getAttribute('data-original-src') || imgNode.src;
+                    if (loadedImages[originalSrc]) {
+                        imgNode.src = loadedImages[originalSrc];
+                    }
+                }
+                return true;
+            }
+        };
+
+        try {
+            const dataUrl = await (type === 'png' ? toPng(componentRef.current, options) : toJpeg(componentRef.current, options));
+            const link = document.createElement('a');
+            link.download = `github-bento.${type}`;
+            link.href = dataUrl;
+            link.click();
+        } catch (err) {
+            console.error(`Error exporting as ${type}:`, err);
         }
+    }, [componentRef, loadedImages]);
 
-        toJpeg(componentRef.current, { cacheBust: true, quality: 1, pixelRatio: 2, backgroundColor: '#e8e8e8' })
-            .then((dataUrl) => {
-                const link = document.createElement('a')
-                link.download = 'my-image-name.jpeg'
-                link.href = dataUrl
-                link.click()
-                console.log('2');
-
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [componentRef])
-
+    // Image component with fallback and original source tracking
+    const Image = ({ src, alt, className }: { src: string; alt: string; className?: string }) => (
+        <img
+            src={loadedImages[src] || src}
+            data-original-src={src}
+            alt={alt}
+            className={className}
+            crossOrigin="anonymous"
+        />
+    );
     return (
         <React.Fragment>
             <div ref={componentRef} className='p-10'>
@@ -78,8 +175,8 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 {/* upper section */}
                                 <div className="w-full h-1/2 flex justify-between">
                                     <div className="w-1/6 mr-2 flex flex-col items-center">
-                                        <img src="https://avatars.githubusercontent.com/u/113491469?v=4" alt="" className="w-full rounded-2xl" crossOrigin="anonymous" />
-                                        <img src={`${corsProxy}https://i.pinimg.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg`} alt="" className="h-full w-full mt-2 rounded-xl object-cover" crossOrigin="anonymous" />
+                                        <img src={`${userStats.avatarUrl}`} alt="" className="w-full rounded-2xl" crossOrigin="anonymous" />
+                                        <Image src={`https://i.pinimg.com/736x/b4/2b/04/b42b04d2a5511ada786bd0a25f3b8eff.jpg`} alt="" className="h-full w-full mt-2 rounded-xl object-cover" />
                                     </div>
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete.main1}` }}>
                                         {/* personal details */}
@@ -113,7 +210,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                                     {userStats.followersCount}
                                                 </h1>
                                             </div>
-                                            <img src={`${corsProxy}https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" crossOrigin="anonymous" />
+                                            <Image src={`https://i.pinimg.com/736x/82/c7/cd/82c7cd0e29580258d17d00a3512da26b.jpg`} alt="" className="rounded-xl h-full w-full object-cover" />
                                         </div>
                                     </div>
                                     <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete.main3}` }}>
@@ -170,12 +267,12 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 </div>
                             </div>
 
-                            <img src={`${corsProxy}https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg`} alt="" className="w-2/10 h-full rounded-xl object-cover" crossOrigin="anonymous" />
+                            <Image src="https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg" alt="" className="w-2/10 h-full rounded-xl object-cover" />
                         </div>
 
                         {/* github calender */}
                         <div className="h-3/10 w-full rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete.main4}` }}>
-                            <GithubGraph username="benedicti0n" blockMargin={4} colorPallete={[colorPallete.githubHeatmap[0], colorPallete.githubHeatmap[1], colorPallete.githubHeatmap[2], colorPallete.githubHeatmap[3], colorPallete.githubHeatmap[4]]} />
+                            <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete.githubHeatmap[0], colorPallete.githubHeatmap[1], colorPallete.githubHeatmap[2], colorPallete.githubHeatmap[3], colorPallete.githubHeatmap[4]]} />
                         </div>
                     </div>
 
@@ -185,10 +282,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
             <div className='w-full flex justify-center items-center'>
                 <div className='mx-2'>
-                    <Button text='Export As JPEG' onClickFunction={handleExportToJpeg} icon={<LucideFileImage />} />
+                    <Button text='Export As JPEG' onClickFunction={() => handleExport("jpeg")} icon={<LucideFileImage />} />
                 </div>
                 <div className='mx-2'>
-                    <Button text="Export As PNG" onClickFunction={handleExportToPng} icon={<LucideImage />} />
+                    <Button text="Export As PNG" onClickFunction={() => handleExport("png")} icon={<LucideImage />} />
                 </div>
             </div>
         </React.Fragment >
