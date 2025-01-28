@@ -271,8 +271,11 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                         </div>
 
                         {/* github calender */}
-                        <div className="h-3/10 w-full rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete.main4}` }}>
-                            <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete.githubHeatmap[0], colorPallete.githubHeatmap[1], colorPallete.githubHeatmap[2], colorPallete.githubHeatmap[3], colorPallete.githubHeatmap[4]]} />
+                        <div className="h-3/10 w-full rounded-xl flex justify-center items-center font-[ChivoRegular] pb-2" >
+                            <Image src="https://i.pinimg.com/736x/c1/5a/cd/c15acd2d344c7fb78e420c988596907a.jpg" alt="" className="h-full rounded-xl object-cover mr-2" />
+                            <div className="h-full w-full rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete.main4}` }}>
+                                <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete.githubHeatmap[0], colorPallete.githubHeatmap[1], colorPallete.githubHeatmap[2], colorPallete.githubHeatmap[3], colorPallete.githubHeatmap[4]]} />
+                            </div>
                         </div>
                     </div>
 
