@@ -13,6 +13,7 @@ const corsProxy = "https://cors-anywhere.herokuapp.com/";
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const componentRef = useRef<HTMLDivElement>(null)
 
+    // @ts-expect-error: Nested userDetails structure
     githubData = githubData.userDetails.userDetails
 
     const handleExportToPng = useCallback(() => {
@@ -81,11 +82,11 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[1]}` }}>
                                         {/* personal details */}
                                         <div className="h-1/2 ">
-                                            <h1 className="text-3xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
+                                            <h1 className="text-2xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
                                             {/* help */}
-                                            <h1 className="text-xl font-[ChivoRegular]">@{githubData.username}</h1>
+                                            <h1 className="text-lg font-[ChivoRegular]">@{githubData.username}</h1>
                                         </div>
-                                        <h1 className="h-1/2 text-sm font-[ChivoRegular] mt-4">{githubData.bio}</h1>
+                                        <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{githubData.bio}</h1>
                                     </div>
 
                                     {/* place, time, followers */}
@@ -93,11 +94,11 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                         <div className="flex h-1/2">
                                             <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                                 <h1 className="w-full flex text-sm font-[ChivoThin] items-center "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
-                                                <h1 className="text-xl pt-2 font-[ChivoMedium] ">
+                                                <h1 className="text-sm pt-2 font-[ChivoMedium] ">
                                                     {githubData.location}
                                                 </h1>
                                             </div>
-                                            <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
+                                            <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${colorPallete[2]}` }}>
                                                 <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideCircleDot className="h-4 w-4 mr-1" />Issues</h1>
                                                 <h1 className="text-xl pt-2 font-[ChivoMedium]">
                                                     {githubData.issuesCount}
