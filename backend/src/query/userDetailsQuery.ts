@@ -1,6 +1,7 @@
 export const userDetailsQuery = `
   name
   bio
+  avatarUrl
   location
   following {
     totalCount

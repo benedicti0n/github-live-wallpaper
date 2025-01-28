@@ -5,6 +5,7 @@ export interface GitHubResponse {
 export interface UserData {
     name: string;
     bio: string | null;
+    avatarUrl: string | null;
     location: string | null;
     following: { totalCount: number };
     followers: { totalCount: number };
@@ -45,6 +46,7 @@ export interface UserData {
 export interface UserDetails {
     name: string;
     username: string;
+    avatarUrl: string | null;
     bio: string | null;
     location: string | null;
     followingCount: number;

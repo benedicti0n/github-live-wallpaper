@@ -50,6 +50,7 @@ const getUserStats = (userData: UserData): UserDetails => {
     const stats: UserDetails = {
         name: userData.name,
         username: '',
+        avatarUrl: userData.avatarUrl,
         bio: userData.bio,
         location: userData.location,
         followingCount: userData.following.totalCount,
