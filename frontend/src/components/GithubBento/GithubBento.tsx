@@ -4,7 +4,7 @@ import { UserDetails } from './types';
 
 import GithubGraph from "../GithubGraph";
 import { BluePallete, GreenPallete, PurplePallete } from "./ColorHues";
-import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot, LucideCode } from "lucide-react";
+import { LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit, LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFileImage, LucideImage, LucideCircleDot, LucideCode, LucideFolderGit, LucideGitCommitVertical } from "lucide-react";
 import Button from '../ui/Button';
 
 const colorPallete = PurplePallete;
@@ -83,11 +83,9 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     </div>
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[1]}` }}>
                                         {/* personal details */}
-                                        <div className="h-1/2 ">
-                                            <h1 className="text-2xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
-                                            {/* help */}
-                                            <h1 className="text-lg font-[ChivoRegular]">@{githubData.username}</h1>
-                                        </div>
+                                        <h1 className="text-2xl font-[ChivoMedium]">{githubData.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
+                                        {/* help */}
+                                        <h1 className="text-lg font-[ChivoRegular]">@{githubData.username}</h1>
                                         <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{githubData.bio}</h1>
                                     </div>
 
@@ -100,10 +98,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                                     {githubData.location}
                                                 </h1>
                                             </div>
-                                            <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideCircleDot className="h-4 w-4 mr-1" />Issues</h1>
+                                            <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[2]}` }}>
+                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideFolderGit className="h-4 w-4 mr-1" />Repos</h1>
                                                 <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                    {githubData.issuesCount}
+                                                    {githubData.totalRepositories}
                                                 </h1>
                                             </div>
                                         </div>
@@ -147,8 +145,8 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                             <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalStars}</h1>
                                         </div>
                                         <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[2]}` }}>
-                                            <h1 className="w-full flex text-sm font-[ChivoThin]">  <LucideCode className="h-6 w-6 mr-1" />Total Repos</h1>
-                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{githubData.totalRepositories}</h1>
+                                            <h1 className="w-full flex text-sm font-[ChivoThin] items-center">  <LucideGitCommitVertical className="h-6 w-6 mr-1" />Total Commits</h1>
+                                            <h1 className="text-lg pt-2 font-[ChivoMedium]">{streakStats.totalContributions}</h1>
                                         </div>
                                     </div>
 
