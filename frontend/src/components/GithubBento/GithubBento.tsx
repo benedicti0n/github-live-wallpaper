@@ -21,10 +21,10 @@ const colorPallete = {
 type ColorPaletteType = keyof typeof colorPallete;
 
 interface ImageUploadState {
-    topLeft: string;
-    topRight: string;
-    rightSide: string;
-    bottomLeft: string;
+    TopLeft: string;
+    TopRight: string;
+    RightSide: string;
+    BottomLeft: string;
 }
 
 // List of reliable CORS proxies - if one fails, try the next
@@ -39,18 +39,18 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const [selectedPalette, setSelectedPalette] = useState<ColorPaletteType>('earthTones');
     const [loadedImages, setLoadedImages] = useState<{ [key: string]: string }>({});
     const [customImages, setCustomImages] = useState<ImageUploadState>({
-        topLeft: '',
-        topRight: '',
-        rightSide: '',
-        bottomLeft: ''
+        TopLeft: '',
+        TopRight: '',
+        RightSide: '',
+        BottomLeft: ''
     });
     const [imageUrls, setImageUrls] = useState<ImageUploadState>({
-        topLeft: '',
-        topRight: '',
-        rightSide: '',
-        bottomLeft: ''
+        TopLeft: '',
+        TopRight: '',
+        RightSide: '',
+        BottomLeft: ''
     });
-    const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('topLeft');
+    const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('TopLeft');
 
     // @ts-expect-error: Nested userDetails structure
     const streakStats = githubData.streakStats;
@@ -154,7 +154,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             ) : (
                 <div className="bg-gray-200 w-full h-full flex text-center items-center justify-center rounded-xl border-2 border-dashed"
                     style={{ backgroundColor: `${colorPallete[selectedPalette].main1}`, borderColor: `${colorPallete[selectedPalette].main4}` }}>
-                    <span className="w-full text-sm">{position}</span>
+                    <span className="w-full text-sm font-[ChivoRegular]">{position}</span>
                 </div>
             )}
         </>
@@ -162,58 +162,75 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
     return (
         <React.Fragment>
-            <div className="controls mb-4 space-y-4">
-                <div className="flex justify-center items-center space-x-4">
-                    <label className="font-medium">Select Color Palette:</label>
-                    <select
-                        value={selectedPalette}
-                        onChange={(e) => setSelectedPalette(e.target.value as ColorPaletteType)}
-                        className="p-2 border rounded"
-                    >
-                        <option value="earthTones">Earth Tones</option>
-                        <option value="coolBlue">Cool Blue</option>
-                        <option value="forestGreen">Forest Green</option>
-                        <option value="vividPurple">Vivid Purple</option>
-                        <option value="warmSunset">Warm Sunset</option>
-                    </select>
+            <div className='flex items-center justify-center p-2 rounded-3xl mt-6 w-264 ' style={{
+                background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
+                boxShadow: `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
+                color: `${colorPallete[selectedPalette].textColor}`
+            }}>
+                <div className="w-full p-6 rounded-2xl bg-gray-100 shadow-lg flex gap-6" style={{ background: `${colorPallete[selectedPalette].bgColor}` }}>
 
-                    <div className="border p-4 rounded-lg bg-gray-100">
-                        <h3 className="text-lg font-semibold mb-2">Upload Images</h3>
 
-                        <label className="block text-sm font-medium">Select Image Position:</label>
+                    {/* Color Palette Selection */}
+                    <div className="w-1/2 font-[ChivoRegular]">
+                        <label className="text-xl font-[ChivoMedium] block mb-2 invert">Select Color Palette:</label>
                         <select
-                            value={selectedPosition}
-                            onChange={(e) => setSelectedPosition(e.target.value as keyof ImageUploadState)}
-                            className="w-full p-2 border rounded mb-3"
+                            value={selectedPalette}
+                            onChange={(e) => setSelectedPalette(e.target.value as ColorPaletteType)}
+                            className="p-2 border rounded-lg w-full shadow-sm invert"
                         >
-                            <option value="topLeft">Top Left</option>
-                            <option value="topRight">Top Right</option>
-                            <option value="rightSide">Right Side</option>
-                            <option value="bottomLeft">Bottom Left</option>
+                            <option value="earthTones">Earth Tones</option>
+                            <option value="coolBlue">Cool Blue</option>
+                            <option value="forestGreen">Forest Green</option>
+                            <option value="vividPurple">Vivid Purple</option>
+                            <option value="warmSunset">Warm Sunset</option>
                         </select>
+                    </div>
 
-                        <label className="block text-sm font-medium">Upload an Image:</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageUpload(e, selectedPosition)}
-                            className="w-full p-2 border rounded mb-2"
-                        />
+                    {/* Image Upload Section */}
+                    <div className="w-1/2 p-5 rounded-xl shadow-md font-[ChivoRegular]" style={{ background: `${colorPallete[selectedPalette].main1}`, color: `${colorPallete[selectedPalette].textColor}` }}>
+                        <h3 className="text-xl font-[ChivoMedium] font-semibold mb-4">Upload Images</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm font-medium block mb-2">Select Image Position:</label>
+                                <select
+                                    value={selectedPosition}
+                                    onChange={(e) => setSelectedPosition(e.target.value as keyof ImageUploadState)}
+                                    className="w-full p-2 border rounded-lg shadow-sm"
+                                >
+                                    <option value="TopLeft">Top Left</option>
+                                    <option value="TopRight">Top Right</option>
+                                    <option value="RightSide">Right Side</option>
+                                    <option value="BottomLeft">Bottom Left</option>
+                                </select>
+                            </div>
 
-                        <label className="block text-sm font-medium">Or Enter Image URL:</label>
-                        <input
-                            type="text"
-                            value={imageUrls[selectedPosition]}
-                            placeholder="Paste image URL here..."
-                            onChange={(e) => handleImageUrlInput(e, selectedPosition)}
-                            className="w-full p-2 border rounded"
-                        />
+                            <div>
+                                <label className="text-sm font-medium block mb-2">Upload an Image:</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => handleImageUpload(e, selectedPosition)}
+                                    className="w-full p-2 border rounded-lg shadow-sm"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-sm font-medium block mb-2">Or Enter Image URL:</label>
+                                <input
+                                    type="text"
+                                    value={imageUrls[selectedPosition]}
+                                    placeholder="Paste image URL here..."
+                                    onChange={(e) => handleImageUrlInput(e, selectedPosition)}
+                                    className="w-full p-2 border rounded-lg shadow-sm focus:outline-none"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
-            <div ref={componentRef} className='p-10 flex'>
+            <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3 my-4' style={{ backgroundImage: "https://i.pinimg.com/736x/6a/ea/01/6aea01cbb972a1c6e16bf720ca995c75.jpg" }}>
                 <div className="h-164 w-264 mt-6 p-2 rounded-3xl" style={{
                     background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
                     boxShadow: `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
@@ -232,7 +249,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 <div className="w-full h-1/2 flex justify-between">
                                     <div className="w-1/6 mr-2 flex flex-col items-center">
                                         <img src={`${userStats.avatarUrl}`} alt="" className="w-full rounded-2xl mb-2" crossOrigin="anonymous" />
-                                        <ImageUploadSection position="topLeft" />
+                                        <ImageUploadSection position="TopLeft" />
                                     </div>
                                     <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main1}` }}>
                                         {/* personal details */}
@@ -266,7 +283,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                                     {userStats.followersCount}
                                                 </h1>
                                             </div>
-                                            <ImageUploadSection position="topRight" />
+                                            <ImageUploadSection position="TopRight" />
                                         </div>
                                     </div>
                                     <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main3}` }}>
@@ -323,14 +340,14 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 </div>
                             </div>
                             <div className='w-3/10 h-full flex'>
-                                <ImageUploadSection position="rightSide" />
+                                <ImageUploadSection position="RightSide" />
                             </div>
                         </div>
 
                         {/* github calender */}
                         <div className="h-3/10 w-full rounded-xl flex justify-center items-center font-[ChivoRegular]" >
                             <div className='w-1/10 h-full mr-2'>
-                                <ImageUploadSection position="bottomLeft" />
+                                <ImageUploadSection position="BottomLeft" />
                             </div>
                             <div className="h-full w-9/10 rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete[selectedPalette].main4}` }}>
                                 <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete[selectedPalette].githubHeatmap[0], colorPallete[selectedPalette].githubHeatmap[1], colorPallete[selectedPalette].githubHeatmap[2], colorPallete[selectedPalette].githubHeatmap[3], colorPallete[selectedPalette].githubHeatmap[4]]} />
