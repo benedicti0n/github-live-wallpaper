@@ -332,7 +332,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                                 {userStats.contributedOrganizations && userStats.contributedOrganizations.map((org: { name: string, avatarUrl: string }) => (
                                                     <div key={org.name} className="flex mb-4">
                                                         <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
-                                                        <span className="font-[ChivoRegular] text-base">{org.name}</span>
+                                                        <span className="font-[ChivoRegular] text-sm">{org.name}</span>
                                                     </div>
                                                 ))}
                                                 <LucideEllipsis className="w-6 h-6" />
