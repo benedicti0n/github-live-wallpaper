@@ -58,7 +58,7 @@ const Homepage = () => {
     };
 
     return (
-        <div className="w-3/4 min-h-screen px-4 flex flex-col justify-center items-center relative">
+        <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
             <Navbar />
             <div className="w-full h-full flex flex-col justify-center items-center py-16">
                 <h1 className="text-7xl font-extrabold bg-gradient-to-br from-blue-900 via-blue-600 to-blue-900 bg-clip-text text-transparent">
