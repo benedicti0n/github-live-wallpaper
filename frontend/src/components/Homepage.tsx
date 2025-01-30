@@ -47,7 +47,7 @@ const Homepage = () => {
             setGithubData(data)
             setLoading(false)
         } catch (error) {
-            console.error('Error fetching GitHub stats:', error.message);
+            console.error('Error fetching GitHub stats:', error);
         }
     }
 
