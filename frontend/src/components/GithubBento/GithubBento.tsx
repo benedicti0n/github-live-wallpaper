@@ -37,7 +37,7 @@ interface ImageUploadState {
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const componentRef = useRef<HTMLDivElement>(null);
     const [selectedPalette, setSelectedPalette] = useState<ColorPaletteType>('earthTones');
-    const [loadedImages, setLoadedImages] = useState<{ [key: string]: string }>({});
+    const [loadedImages] = useState<{ [key: string]: string }>({});
     const [customImages, setCustomImages] = useState<ImageUploadState>({
         TopLeft: '',
         TopRight: '',
