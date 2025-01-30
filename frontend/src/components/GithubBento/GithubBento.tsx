@@ -7,6 +7,8 @@ import {
     LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit,
     LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser,
     LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical,
+    LucideChrome,
+    LucideDownload,
 } from "lucide-react";
 import Button from '../ui/Button';
 
@@ -366,8 +368,14 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                 <div className='mx-2'>
                     <Button text="Export As PNG" onClickFunction={() => handleExport("png")} icon={<LucideImage />} />
                 </div>
+                <div className='mx-2'>
+                    <Button text="Set in Browser Home Tab" onClickFunction={() => { }} icon={<LucideChrome />} />
+                </div>
+                <div className='mx-2'>
+                    <Button text={`Download the Win/Mac App`} onClickFunction={() => { }} icon={<LucideDownload />} />
+                </div>
             </div>
-        </React.Fragment >
+        </React.Fragment>
     );
 };
 
