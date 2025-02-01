@@ -15,66 +15,66 @@ interface IColorPallete {
 }
 
 export const coolBluePalette: IColorPallete = {
-    bgColor: "#f0faff", // Soft light blue
-    main1: "#007acc",   // Vibrant blue
-    main2: "#005f99",   // Deep blue
-    main3: "#003f66",   // Darker blue
-    main4: "#001f33",   // Almost black blue
+    bgColor: "#eff6ff", // Soft light blue
+    main1: "#63a3f7",   // Vibrant blue
+    main2: "#3378f1",   // Deep blue
+    main3: "#2962e7",   // Darker blue
+    main4: "#203988",   // Almost black blue
     textColor: "#ffffff", // Pure white
     githubHeatmap: {
-        0: "#e0f7ff", // Very light blue
-        1: "#b3e0ff", // Light blue
-        2: "#80cfff", // Medium blue
-        3: "#4db8ff", // Bright blue
-        4: "#0099ff", // Bold blue
+        0: "#eff6ff", // Very light blue
+        1: "#95c3fb", // Light blue
+        2: "#63a3f7", // Medium blue
+        3: "#3378f1", // Bright blue
+        4: "#2962e7", // Bold blue
     }
 };
 
 export const warmSunsetPalette: IColorPallete = {
-    bgColor: "#fff4e6", // Soft peach
-    main1: "#ff6f3c",   // Fiery orange
-    main2: "#d9542c",   // Deep burnt orange
-    main3: "#a13d1f",   // Dark orange-red
-    main4: "#6b2913",   // Brownish orange
+    bgColor: "#fef9ec", // Soft peach
+    main1: "#e5901b",   // Fiery orange
+    main2: "#cb6d14",   // Deep burnt orange
+    main3: "#a84e15",   // Dark orange-red
+    main4: "#893c17",   // Brownish orange
     textColor: "#fff", // Dark brown
     githubHeatmap: {
-        0: "#ffe6cc", // Light peach
-        1: "#ffc299", // Soft orange
-        2: "#ff9966", // Bright orange
-        3: "#ff7040", // Bold orange
-        4: "#ff471a", // Strong fiery orange
+        0: "#fef9ec", // Light peach
+        1: "#f5dc92", // Soft orange
+        2: "#ecaf33", // Bright orange
+        3: "#cb6d14", // Bold orange
+        4: "#a84e15", // Strong fiery orange
     }
 };
 
 export const forestGreenPalette: IColorPallete = {
-    bgColor: "#eef7f1", // Light mint green
-    main1: "#2d6a4f",   // Forest green
-    main2: "#1b4332",   // Dark green
-    main3: "#74c69d",   // Very dark green
-    main4: "#081c15",   // Vibrant green
+    bgColor: "#edfff7", // Light mint green
+    main1: "#00965b",   // Forest green
+    main2: "#06754a",   // Dark green
+    main3: "#07603f",   // Very dark green
+    main4: "#003722",   // Vibrant green
     textColor: "#fefefe", // Off white
     githubHeatmap: {
-        0: "#e5f2e8", // Very light green
-        1: "#cde4d6", // Soft mint
-        2: "#aad9bc", // Light green
-        3: "#7fcf9f", // Vibrant green
-        4: "#4cba75", // Bold green
+        0: "#edfff7", // Very light green
+        1: "#70ffc8", // Soft mint
+        2: "#00f192", // Light green
+        3: "#00965b", // Vibrant green
+        4: "#07603f", // Bold green
     }
 };
 
 export const vividPurplePalette: IColorPallete = {
-    bgColor: "#f9f4ff", // Light lavender
-    main1: "#9d4edd",   // Bold purple
-    main2: "#7b2cbf",   // Deep purple
-    main3: "#5a189a",   // Dark purple
-    main4: "#3c096c",   // Almost black purple
+    bgColor: "#f5f5fd", // Light lavender
+    main1: "#5a3ec3",   // Bold purple
+    main2: "#4b34a3",   // Deep purple
+    main3: "#3f2c86",   // Dark purple
+    main4: "#261b5a",   // Almost black purple
     textColor: "#ffffff", // Pure white
     githubHeatmap: {
-        0: "#f0e5ff", // Light lavender
-        1: "#d9b3ff", // Light purple
-        2: "#bf80ff", // Medium purple
-        3: "#a64dff", // Bright purple
-        4: "#8c1aff", // Vivid purple
+        0: "#f5f5fd", // Light lavender
+        1: "#afadf1", // Light purple
+        2: "#6a51d6", // Medium purple
+        3: "#4b34a3", // Bright purple
+        4: "#3f2c86", // Vivid purple
     }
 };
 
