@@ -27,6 +27,7 @@ interface ImageUploadState {
     TopRight: string;
     RightSide: string;
     BottomLeft: string;
+    Background: string;
 }
 
 // List of reliable CORS proxies - if one fails, try the next
@@ -44,13 +45,15 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         TopLeft: '',
         TopRight: '',
         RightSide: '',
-        BottomLeft: ''
+        BottomLeft: '',
+        Background: '',
     });
     const [imageUrls, setImageUrls] = useState<ImageUploadState>({
         TopLeft: '',
         TopRight: '',
         RightSide: '',
-        BottomLeft: ''
+        BottomLeft: '',
+        Background: ''
     });
     const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('TopLeft');
 
@@ -203,6 +206,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                     <option value="TopRight">Top Right</option>
                                     <option value="RightSide">Right Side</option>
                                     <option value="BottomLeft">Bottom Left</option>
+                                    <option value="Background">Background</option>
                                 </select>
                             </div>
 
@@ -232,7 +236,17 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             </div>
 
 
-            <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3 my-4' style={{ backgroundImage: "https://i.pinimg.com/736x/6a/ea/01/6aea01cbb972a1c6e16bf720ca995c75.jpg" }}>
+            <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3 my-4 border-2 border-dashed rounded-3xl' style={{
+                backgroundImage: customImages.Background ?
+                    `url(${customImages.Background.startsWith('data:') ?
+                        customImages.Background :
+                        `https://api.allorigins.win/raw?url=${encodeURIComponent(customImages.Background)}`
+                    })` : '',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                borderColor: `${colorPallete[selectedPalette].main4}`
+            }}>
                 <div className="h-164 w-264 mt-6 p-2 rounded-3xl" style={{
                     background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
                     boxShadow: `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
