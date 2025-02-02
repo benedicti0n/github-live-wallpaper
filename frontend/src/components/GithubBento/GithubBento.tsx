@@ -9,6 +9,7 @@ import {
     LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical,
     LucideChrome,
     LucideDownload,
+    LucideShare,
 } from "lucide-react";
 import Button from '../ui/Button';
 
@@ -167,7 +168,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
     return (
         <React.Fragment>
-            <div className='flex items-center justify-center p-2 rounded-3xl mt-6 w-264 ' style={{
+            <div className='flex items-center justify-center p-2 rounded-3xl mt-6 w-264 mb-6 ' style={{
                 background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
                 boxShadow: `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
                 color: `${colorPallete[selectedPalette].textColor}`
@@ -236,7 +237,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             </div>
 
 
-            <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3 my-4 border-2 border-dashed rounded-3xl' style={{
+            <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3' style={{
                 backgroundImage: customImages.Background ?
                     `url(${customImages.Background.startsWith('data:') ?
                         customImages.Background :
@@ -245,7 +246,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                borderColor: `${colorPallete[selectedPalette].main4}`
+                borderWidth: customImages.Background ? 'none' : '2px',
+                borderStyle: customImages.Background ? "none" : "dashed",
+                borderColor: `${colorPallete[selectedPalette].main4}`,
+                borderRadius: customImages.Background ? "0px" : "1.5rem"
             }}>
                 <div className="h-164 w-264 mt-6 p-2 rounded-3xl" style={{
                     background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
@@ -375,7 +379,10 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             </div>
 
 
-            <div className='w-full flex justify-center items-center'>
+            <div className='w-full flex justify-center items-center mt-6'>
+                <div className='mx-2'>
+                    <Button text='Share' onClickFunction={() => { }} icon={<LucideShare />} />
+                </div>
                 <div className='mx-2'>
                     <Button text='Export As JPEG' onClickFunction={() => handleExport("jpeg")} icon={<LucideFileImage />} />
                 </div>
@@ -389,7 +396,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                     <Button text={`Download the Win/Mac App`} onClickFunction={() => { }} icon={<LucideDownload />} />
                 </div>
             </div>
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
