@@ -1,5 +1,8 @@
-import { toJpeg, toPng } from 'html-to-image';
 import React, { useRef, useCallback, useState } from 'react';
+import { useClerk, useSession } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom'
+
+import { toJpeg, toPng } from 'html-to-image';
 import { UserDetails } from './types';
 import GithubGraph from "../GithubGraph";
 import { coolBluePalette, earthTonesPalette, forestGreenPalette, vividPurplePalette, warmSunsetPalette } from "./ColorHues";
@@ -39,7 +42,11 @@ interface ImageUploadState {
 // ];
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
+    const navigate = useNavigate()
     const componentRef = useRef<HTMLDivElement>(null);
+    const { session, isSignedIn } = useSession()
+    const { openSignIn } = useClerk()
+
     const [selectedPalette, setSelectedPalette] = useState<ColorPaletteType>('earthTones');
     const [loadedImages] = useState<{ [key: string]: string }>({});
     const [customImages, setCustomImages] = useState<ImageUploadState>({
@@ -381,7 +388,13 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
             <div className='w-full flex justify-center items-center mt-6'>
                 <div className='mx-2'>
-                    <Button text='Share' onClickFunction={() => { }} icon={<LucideShare />} />
+                    <Button text='Share' onClickFunction={() => {
+                        if (isSignedIn) {
+                            navigate(`/preview/${userStats.username}`)
+                        } else {
+                            openSignIn()
+                        }
+                    }} icon={<LucideShare />} />
                 </div>
                 <div className='mx-2'>
                     <Button text='Export As JPEG' onClickFunction={() => handleExport("jpeg")} icon={<LucideFileImage />} />
