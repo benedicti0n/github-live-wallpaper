@@ -63,18 +63,18 @@ export const forestGreenPalette: IColorPallete = {
 };
 
 export const vividPurplePalette: IColorPallete = {
-    bgColor: "#f5f5fd", // Light lavender
-    main1: "#5a3ec3",   // Bold purple
-    main2: "#4b34a3",   // Deep purple
-    main3: "#3f2c86",   // Dark purple
-    main4: "#261b5a",   // Almost black purple
+    bgColor: "#f6f3ff", // Light lavender
+    main1: "#b388fd",   // Bold purple
+    main2: "#9d58fa",   // Deep purple
+    main3: "#9235f2",   // Dark purple
+    main4: "#380e67",   // Almost black purple
     textColor: "#ffffff", // Pure white
     githubHeatmap: {
-        0: "#f5f5fd", // Light lavender
-        1: "#afadf1", // Light purple
-        2: "#6a51d6", // Medium purple
-        3: "#4b34a3", // Bright purple
-        4: "#3f2c86", // Vivid purple
+        0: "#f6f3ff", // Light lavender
+        1: "#c0a1ff", // Light purple
+        2: "#9d58fa", // Medium purple
+        3: "#8323de", // Bright purple
+        4: "#5a1a98", // Vivid purple
     }
 };
 
