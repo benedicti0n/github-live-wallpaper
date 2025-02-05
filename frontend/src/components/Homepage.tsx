@@ -1,59 +1,20 @@
 import React, { useState } from 'react';
-import { UserDetails } from './GithubBento/types';
 
 import Navbar from './Navbar';
 import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
+import { useGithubData } from '../hooks/useGithubData';
 
 import { LucideSearch } from 'lucide-react';
 
-const serverUrl = import.meta.env.VITE_SERVER_URL;
-
 const Homepage = () => {
-    const [loading, setLoading] = useState<boolean>(false)
-    const [username, setUsername] = useState('')
-    const [githubData, setGithubData] = useState<UserDetails | null>()
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value)
-    }
-
-    const handleSearch = async () => {
-        // if (!setUsername.trim()) {
-        //     alert('Please enter a Github username!')
-        //     return
-        // }
-
-        try {
-            setLoading(true)
-            const response = await fetch(`${serverUrl}/api/v1/fetchGithubStats`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify({ username })
-            })
-
-            if (!response.ok) {
-                setGithubData(null)
-                setLoading(false)
-                throw new Error('Failed to fetch GitHub stats');
-            }
-
-            const data: UserDetails = await response.json();
-            console.log(data);
-
-            setGithubData(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error fetching GitHub stats:', error);
-        }
-    }
+    const { githubData, fetchGithubData } = useGithubData()
+    const [username, setUsername] = useState("")
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            handleSearch();
+            fetchGithubData(username);
         }
     };
 
@@ -68,16 +29,14 @@ const Homepage = () => {
                 <div className="mt-4 gap-1 flex">
                     <Input
                         value={username}
-                        onChange={handleInputChange}
+                        onChange={(e) => setUsername(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="Enter GitHub username"
                     />
-                    <Button text="Search" icon={<LucideSearch />} onClickFunction={handleSearch} />
+                    <Button text="Search" icon={<LucideSearch />} onClickFunction={() => fetchGithubData} />
                 </div>
 
-                {loading && <h1>Fetching UserDetails</h1>}
-
-                {!loading && githubData ? (
+                {githubData ? (
                     <GithubBento githubData={githubData} />
                 ) : (
                     githubData === null && <h1>User not found</h1>
