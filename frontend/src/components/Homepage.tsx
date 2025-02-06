@@ -5,6 +5,7 @@ import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
 import { useGithubData } from '../hooks/useGithubData';
+import { removeGithubDataFromLocalStorage } from '../utils/removeLocalStorage';
 
 import { LucideSearch } from 'lucide-react';
 
@@ -15,6 +16,7 @@ const Homepage = () => {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             fetchGithubData(username);
+            removeGithubDataFromLocalStorage();
         }
     };
 
@@ -33,7 +35,10 @@ const Homepage = () => {
                         onKeyDown={handleKeyDown}
                         placeholder="Enter GitHub username"
                     />
-                    <Button text="Search" icon={<LucideSearch />} onClickFunction={() => fetchGithubData} />
+                    <Button text="Search" icon={<LucideSearch />} onClickFunction={() => {
+                        fetchGithubData(username);
+                        removeGithubDataFromLocalStorage();
+                    }} />
                 </div>
 
                 {githubData ? (
