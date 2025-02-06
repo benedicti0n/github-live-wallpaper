@@ -3,7 +3,7 @@ import { useClerk, useSession } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom'
 
 import { toJpeg, toPng } from 'html-to-image';
-import { UserDetails } from './types';
+import { UserDetails, ImageUploadState } from './types';
 import GithubGraph from "../GithubGraph";
 import { coolBluePalette, earthTonesPalette, forestGreenPalette, vividPurplePalette, warmSunsetPalette } from "./ColorHues";
 import {
@@ -26,14 +26,6 @@ const colorPallete = {
 
 type ColorPaletteType = keyof typeof colorPallete;
 
-interface ImageUploadState {
-    TopLeft: string;
-    TopRight: string;
-    RightSide: string;
-    BottomLeft: string;
-    Background: string;
-}
-
 // List of reliable CORS proxies - if one fails, try the next
 // const CORS_PROXIES = [
 //     'https://api.allorigins.win/raw?url=',
@@ -44,73 +36,56 @@ interface ImageUploadState {
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const navigate = useNavigate()
     const componentRef = useRef<HTMLDivElement>(null);
-    const { session, isSignedIn } = useSession()
+    const { isSignedIn } = useSession()
     const { openSignIn } = useClerk()
 
     const [selectedPalette, setSelectedPalette] = useState<ColorPaletteType>('earthTones');
-    const [loadedImages] = useState<{ [key: string]: string }>({});
-    const [customImages, setCustomImages] = useState<ImageUploadState>({
-        TopLeft: '',
-        TopRight: '',
-        RightSide: '',
-        BottomLeft: '',
-        Background: '',
-    });
-    const [imageUrls, setImageUrls] = useState<ImageUploadState>({
+    const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('TopLeft');
+    const [images, setImages] = useState<ImageUploadState>({
         TopLeft: '',
         TopRight: '',
         RightSide: '',
         BottomLeft: '',
         Background: ''
     });
-    const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('TopLeft');
 
     // @ts-expect-error: Nested userDetails structure
     const streakStats = githubData.streakStats;
     // @ts-expect-error: Nested userDetails structure
     const userStats = githubData.userDetails;
 
-    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>, position: keyof ImageUploadState) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            try {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const result = reader.result as string;
-                    setCustomImages(prev => ({
-                        ...prev,
-                        [position]: result
-                    }));
-                    // Clear the URL input for this position
-                    setImageUrls(prev => ({
-                        ...prev,
-                        [position]: ''
-                    }));
-                };
-                reader.readAsDataURL(file);
-            } catch (error) {
-                console.error('Error uploading image:', error);
-            }
+    const handleImageInput = (
+        position: keyof ImageUploadState,
+        input: File | string
+    ) => {
+        if (input instanceof File) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImages(prev => ({
+                    ...prev,
+                    [position]: reader.result as string
+                }));
+            };
+            reader.readAsDataURL(input);
+        } else {
+            // Handle URL input
+            setImages(prev => ({
+                ...prev,
+                [position]: input
+            }));
         }
     };
 
-    const handleImageUrlInput = (event: React.ChangeEvent<HTMLInputElement>, position: keyof ImageUploadState) => {
-        const url = event.target.value;
-        setImageUrls(prev => ({
-            ...prev,
-            [position]: url
-        }));
-        if (url) {
-            setCustomImages(prev => ({
-                ...prev,
-                [position]: url
-            }));
-        } else {
-            setCustomImages(prev => ({
-                ...prev,
-                [position]: ''
-            }));
+    // Event handlers
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            handleImageInput(selectedPosition, file);
         }
+    };
+
+    const handleUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        handleImageInput(selectedPosition, event.target.value);
     };
 
     const handleExport = useCallback(async (type: 'png' | 'jpeg') => {
@@ -120,21 +95,15 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             cacheBust: true,
             pixelRatio: 2,
             quality: 1,
-            backgroundColor: '#e8e8e8',
-            filter: (node: HTMLElement) => {
-                if (node.tagName === 'IMG') {
-                    const imgNode = node as HTMLImageElement;
-                    const originalSrc = imgNode.getAttribute('data-original-src') || imgNode.src;
-                    if (loadedImages[originalSrc]) {
-                        imgNode.src = loadedImages[originalSrc];
-                    }
-                }
-                return true;
-            }
+            backgroundColor: '#e8e8e8'
         };
 
         try {
-            const dataUrl = await (type === 'png' ? toPng(componentRef.current, options) : toJpeg(componentRef.current, options));
+            // Choose export function based on type
+            const exportFunction = type === 'png' ? toPng : toJpeg;
+            const dataUrl = await exportFunction(componentRef.current, options);
+
+            // Create and trigger download
             const link = document.createElement('a');
             link.download = `github-bento.${type}`;
             link.href = dataUrl;
@@ -142,36 +111,44 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         } catch (err) {
             console.error(`Error exporting as ${type}:`, err);
         }
-    }, [componentRef, loadedImages]);
+    }, [componentRef]);
 
     // Image component with fallback and original source tracking
     const ImageUploadSection = ({ position }: { position: keyof ImageUploadState }) => (
         <>{
-            customImages[position] ? (
+            images[position] ? (
                 <img
-                    src={customImages[position].startsWith('data:') ?
-                        customImages[position] :
-                        `https://api.allorigins.win/raw?url=${encodeURIComponent(customImages[position])}`
+                    src={images[position].startsWith('data:') ?
+                        images[position] :
+                        `https://api.allorigins.win/raw?url=${encodeURIComponent(images[position])}`
                     }
                     alt={position}
                     className="h-full w-full object-cover rounded-xl"
                     crossOrigin="anonymous"
-                    onError={(e) => {
-                        console.error('Error loading image:', e);
-                        setCustomImages(prev => ({
+                    onError={() => {
+                        setImages(prev => ({
                             ...prev,
                             [position]: ''
                         }));
                     }}
                 />
             ) : (
-                <div className="bg-gray-200 w-full h-full flex text-center items-center justify-center rounded-xl border-2 border-dashed"
-                    style={{ backgroundColor: `${colorPallete[selectedPalette].main1}`, borderColor: `${colorPallete[selectedPalette].main4}` }}>
+                <div
+                    className="bg-gray-200 w-full h-full flex text-center items-center justify-center rounded-xl border-2 border-dashed"
+                    style={{
+                        backgroundColor: `${colorPallete[selectedPalette].main1}`,
+                        borderColor: `${colorPallete[selectedPalette].main4}`
+                    }}
+                >
                     <span className="w-full text-sm font-[ChivoRegular]">{position}</span>
                 </div>
             )}
         </>
     );
+
+    const handlePositionChange = (newPosition: keyof ImageUploadState) => {
+        setSelectedPosition(newPosition);
+    };
 
     return (
         <React.Fragment>
@@ -189,7 +166,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                         <select
                             value={selectedPalette}
                             onChange={(e) => setSelectedPalette(e.target.value as ColorPaletteType)}
-                            className="p-2 border rounded-lg w-full shadow-sm invert"
+                            className="p-2 border rounded-lg w-full shadow-sm"
                         >
                             <option value="earthTones">Earth Tones</option>
                             <option value="coolBlue">Cool Blue</option>
@@ -207,7 +184,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 <label className="text-sm font-medium block mb-2">Select Image Position:</label>
                                 <select
                                     value={selectedPosition}
-                                    onChange={(e) => setSelectedPosition(e.target.value as keyof ImageUploadState)}
+                                    onChange={(e) => handlePositionChange(e.target.value as keyof ImageUploadState)}
                                     className="w-full p-2 border rounded-lg shadow-sm"
                                 >
                                     <option value="TopLeft">Top Left</option>
@@ -223,19 +200,16 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    onChange={(e) => handleImageUpload(e, selectedPosition)}
-                                    className="w-full p-2 border rounded-lg shadow-sm"
+                                    onChange={handleFileUpload}
+                                    className="w-full p-2 border rounded-lg shadow-sm mb-4"
                                 />
-                            </div>
 
-                            <div>
-                                <label className="text-sm font-medium block mb-2">Or Enter Image URL:</label>
                                 <input
                                     type="text"
-                                    value={imageUrls[selectedPosition]}
                                     placeholder="Paste image URL here..."
-                                    onChange={(e) => handleImageUrlInput(e, selectedPosition)}
-                                    className="w-full p-2 border rounded-lg shadow-sm focus:outline-none"
+                                    onChange={handleUrlInput}
+                                    value={images[selectedPosition].startsWith('data:') ? '' : images[selectedPosition]}
+                                    className="w-full p-2 border rounded-lg shadow-sm"
                                 />
                             </div>
                         </div>
@@ -245,22 +219,22 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
 
             <div ref={componentRef} className='h-screen w-full flex items-center justify-center px-10 pb-10 pt-3' style={{
-                backgroundImage: customImages.Background ?
-                    `url(${customImages.Background.startsWith('data:') ?
-                        customImages.Background :
-                        `https://api.allorigins.win/raw?url=${encodeURIComponent(customImages.Background)}`
+                backgroundImage: images.Background ?
+                    `url(${images.Background.startsWith('data:') ?
+                        images.Background :
+                        `https://api.allorigins.win/raw?url=${encodeURIComponent(images.Background)}`
                     })` : '',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                borderWidth: customImages.Background ? 'none' : '2px',
-                borderStyle: customImages.Background ? "none" : "dashed",
+                borderWidth: images.Background ? 'none' : '2px',
+                borderStyle: images.Background ? "none" : "dashed",
                 borderColor: `${colorPallete[selectedPalette].main4}`,
-                borderRadius: customImages.Background ? "0px" : "1.5rem"
+                borderRadius: images.Background ? "0px" : "1.5rem"
             }}>
                 <div className="h-164 w-264 mt-6 p-2 rounded-3xl" style={{
                     background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
-                    boxShadow: `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
+                    boxShadow: images.Background ? "" : `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
                     color: `${colorPallete[selectedPalette].textColor}`
                 }}>
                     <div className="h-full w-full rounded-2xl flex flex-col p-2"
