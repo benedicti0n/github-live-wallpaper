@@ -1,3 +1,10 @@
+export interface ImageUploadState {
+    TopLeft: string;
+    TopRight: string;
+    RightSide: string;
+    BottomLeft: string;
+    Background: string;
+}
 
 export interface UserDetails {
     name: string;
