@@ -166,7 +166,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                         <select
                             value={selectedPalette}
                             onChange={(e) => setSelectedPalette(e.target.value as ColorPaletteType)}
-                            className="p-2 border rounded-lg w-full shadow-sm"
+                            className="invert p-2 border rounded-lg w-full shadow-sm"
                         >
                             <option value="earthTones">Earth Tones</option>
                             <option value="coolBlue">Cool Blue</option>
