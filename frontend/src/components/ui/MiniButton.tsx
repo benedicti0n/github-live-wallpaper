@@ -6,7 +6,7 @@ interface ButtonProps {
     onClickFunction?: () => void;  // Changed to proper function type
     children?: ReactNode;
     className?: string;  // Added to allow custom styling
-    variant?: "default" | "destructive";
+    variant?: "default" | "destructive" | "success";
 }
 interface IVariants {
     default: {
@@ -14,6 +14,10 @@ interface IVariants {
         text: string
     };
     destructive: {
+        bg: string;
+        text: string;
+    };
+    success: {
         bg: string;
         text: string;
     };
@@ -27,6 +31,10 @@ const variants: IVariants = {
     destructive: {
         bg: "brightness-150 dark:brightness-100 group hover:shadow-md hover:shadow-red-700/60 transition ease-in-out hover:scale-105 p-0.5 rounded-lg bg-gradient-to-br from-red-800 via-red-600 to-red-800 hover:from-red-700 hover:via-red-800 hover:to-red-600",
         text: "group-hover:text-red-500 text-red-600 gap-1"
+    },
+    success: {
+        bg: "brightness-150 dark:brightness-100 group hover:shadow-md hover:shadow-green-700/60 transition ease-in-out hover:scale-105 p-0.5 rounded-lg bg-gradient-to-br from-green-800 via-green-600 to-green-800 hover:from-green-700 hover:via-green-800 hover:to-green-600",
+        text: "group-hover:text-green-500 text-green-600 gap-1"
     }
 }
 
