@@ -13,9 +13,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Image {
+enum Platform {
+  CHROME
+  FIREFOX
+  BRAVE
+  MOBILE
+  DESKTOP
+}
+
+model User {
+  id                  String              @id @default(uuid())
+  platforms           PlatformAccess[]
+  connectedPlatforms  ConnectedPlatform?  @relation(name: "UserToConnectedPlatform") // Make it optional with "?"
+}
+
+model PlatformAccess {
+  id               String   @id @default(uuid())
+  platform         Platform // Enum for Chrome, Firefox, etc.
+  wallpaperId      String
+  wallpaperLink    String
+  wallpaperRef     String
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+}
+model ConnectedPlatform {
   id          String   @id @default(uuid())
-  userId      String   // Clerk's user ID
-  imageUrl    String   // URL of the stored image
-  createdAt   DateTime @default(now()) // Timestamp for when the image was created
+  chrome      Boolean  @default(false)
+  firefox     Boolean  @default(false)
+  brave       Boolean  @default(false)
+  mobile      Boolean  @default(false)
+  desktop     Boolean  @default(false)
+  userId      String   @unique
+  user        User     @relation(name: "UserToConnectedPlatform", fields: [userId], references: [id])
 }
