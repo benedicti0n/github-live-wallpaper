@@ -8,13 +8,13 @@ const AvailableWallpaper = () => {
         // Add more URLs as needed
     ];
     return (
-        <div className="w-full rounded-2xl py-2 mt-2 flex justify-between items-center relative">
+        <div className="w-full rounded-2xl py-2 mt-2 flex items-center relative">
             {wallpapers.map((url, index) => (
                 <WallpaperPreview key={index} imageUrl={url} />
             ))}
-            <div>
+            <div className="h-full flex justify-center items-center ml-4">
                 <MiniButton variant="default">
-                    <LucidePlus className="h-4 w-4" />
+                    <LucidePlus className="h-6 w-6" />
                 </MiniButton>
             </div>
         </div>
