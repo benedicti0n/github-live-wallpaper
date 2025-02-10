@@ -2,8 +2,10 @@ import { atom, useAtom } from "jotai"
 import MiniButton from "../ui/MiniButton"
 
 import { LucidePen, LucideTrash2 } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const modalOpen = atom<boolean>(false)
+const wallpaperId = '1'
 
 const PreviewModal = ({ imageUrl }: { imageUrl: string }) => {
     return (
@@ -17,6 +19,7 @@ const PreviewModal = ({ imageUrl }: { imageUrl: string }) => {
 }
 
 const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useAtom(modalOpen)
 
     const previewWallpaper = () => {
@@ -24,17 +27,10 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
     }
 
     return (
-        <div
-            className="border-2 w-72 h-40 rounded-xl relative mr-6"
-            style={{
-                backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-            }}
-            onClick={previewWallpaper}
-        >
+        <div className="border-2 w-72 h-40 rounded-xl relative mr-6">
+            <img src={`${imageUrl}`} alt={`${imageUrl}`} className="bg-cover bg-center bg-no-repeat rounded-lg w-full h-full" onClick={previewWallpaper} />
             <div className="absolute top-0 right-0 m-1 z-10">
-                <MiniButton variant="default" className="mx-1"><LucidePen className="h-4 w-4" /></MiniButton>
+                <MiniButton variant="default" className="mx-1" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-4 w-4" /></MiniButton>
                 <MiniButton variant="destructive"><LucideTrash2 className="h-4 w-4" /></MiniButton>
             </div>
 
