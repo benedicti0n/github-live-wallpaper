@@ -25,7 +25,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
 
     return (
         <div
-            className="border-2 w-72 h-40 rounded-2xl"
+            className="border-2 w-72 h-40 rounded-xl relative"
             style={{
                 backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -33,7 +33,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
             }}
             onClick={previewWallpaper}
         >
-            <div className="absolute top-0 right-0 m-1">
+            <div className="absolute top-0 right-0 m-1 z-10">
                 <MiniButton variant="default" className="mx-1"><LucidePen className="h-4 w-4" /></MiniButton>
                 <MiniButton variant="destructive"><LucideTrash2 className="h-4 w-4" /></MiniButton>
             </div>
