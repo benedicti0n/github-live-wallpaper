@@ -7,12 +7,16 @@ import { useNavigate } from "react-router-dom"
 const modalOpen = atom<boolean>(false)
 const wallpaperId = '1'
 
-const PreviewModal = ({ imageUrl }: { imageUrl: string }) => {
+const PreviewModal = ({ imageUrl, closeModal }: { imageUrl: string, closeModal: () => void }) => {
     return (
-        <div className="fixed inset-0 z-50 bg-white/30 bg-opacity-75 flex justify-center items-center">
+        <div
+            className="fixed inset-0 z-50 bg-white/30 bg-opacity-75 flex justify-center items-center"
+            onClick={closeModal}
+        >
             <div
-                className="w-1/2 h-1/2 bg-cover bg-center"
+                className="w-2/3 h-2/3 bg-cover bg-center"
                 style={{ backgroundImage: `url(${imageUrl})` }}
+                onClick={(e) => e.stopPropagation()}
             />
         </div>
     )
@@ -34,7 +38,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
                 <MiniButton variant="destructive"><LucideTrash2 className="h-4 w-4" /></MiniButton>
             </div>
 
-            {isModalOpen && <PreviewModal imageUrl={imageUrl} />}
+            {isModalOpen && <PreviewModal imageUrl={imageUrl} closeModal={() => setIsModalOpen(false)} />}
         </div>
     )
 }
