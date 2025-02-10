@@ -362,26 +362,20 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
             <div className='w-full flex justify-center items-center mt-6'>
                 <div className='mx-2'>
-                    <Button text='Share' onClickFunction={() => {
+                    <Button text='Set As Wallpaper' onClickFunction={() => {
                         if (isSignedIn) {
-                            navigate(`/preview/${userStats.username}`)
+                            navigate(`/dashboard`)
                         } else {
                             openSignIn()
                         }
                     }} icon={<LucideShare />} />
                 </div>
-                <div className='mx-2'>
+                {/* <div className='mx-2'>
                     <Button text='Export As JPEG' onClickFunction={() => handleExport("jpeg")} icon={<LucideFileImage />} />
                 </div>
                 <div className='mx-2'>
                     <Button text="Export As PNG" onClickFunction={() => handleExport("png")} icon={<LucideImage />} />
-                </div>
-                <div className='mx-2'>
-                    <Button text="Set in Browser Home Tab" onClickFunction={() => { }} icon={<LucideChrome />} />
-                </div>
-                <div className='mx-2'>
-                    <Button text={`Download the Win/Mac App`} onClickFunction={() => { }} icon={<LucideDownload />} />
-                </div>
+                </div> */}
             </div>
         </React.Fragment >
     );
