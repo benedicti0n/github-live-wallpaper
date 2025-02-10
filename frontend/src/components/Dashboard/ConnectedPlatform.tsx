@@ -11,7 +11,7 @@ const ConnectedPlatform = () => {
                 </h1>
             </div>
 
-            <div className='w-full h-full rounded-2xl py-2 mt-2 space-y-2'>
+            <div className='w-1/2 h-full rounded-2xl py-2 mt-2 space-y-2'>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-[ChivoMedium] text-lg'>Chrome</h1>
                     <MiniButton variant='success'><LucideCheck /></MiniButton>

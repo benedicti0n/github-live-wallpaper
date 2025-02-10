@@ -25,7 +25,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
 
     return (
         <div
-            className="border-2 w-72 h-40 rounded-xl relative"
+            className="border-2 w-72 h-40 rounded-xl relative mr-6"
             style={{
                 backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover',
                 backgroundPosition: 'center',
