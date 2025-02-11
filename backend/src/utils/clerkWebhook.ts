@@ -1,5 +1,8 @@
 import { Webhook } from "svix"
 import { Request, Response } from "express"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 export const userCreateAndDelete = async (req: Request, res: Response) => {
     console.log("hi");
@@ -53,6 +56,33 @@ export const userCreateAndDelete = async (req: Request, res: Response) => {
     // For this guide, log payload to console
     const userId = evt.data.id
     const eventType = evt.type
+
+    try {
+        if (eventType === 'user.created') {
+            // Save user to the database
+            await prisma.user.create({
+                data: {
+                    id: userId,
+                    email: evt.data.email_addresses[0].email_address,
+                    platformsConnectedTo: {
+                        create: {} // This will create a PlatformsConnectedTo with default values
+                    }
+                    // Add any other fields you need to save
+                }
+            })
+        } else if (eventType === 'user.deleted') {
+            // Delete user and related records from the database
+            await prisma.user.delete({
+                where: { id: userId },
+            })
+        }
+    } catch (error) {
+        console.error('Database operation failed:', error)
+        return void res.status(500).json({
+            success: false,
+            message: 'Database operation failed',
+        })
+    }
 
     return void res.status(200).json({
         success: true,
