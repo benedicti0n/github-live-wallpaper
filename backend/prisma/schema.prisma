@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,27 +16,33 @@ enum Platform {
 }
 
 model User {
-  id                  String              @id @default(uuid())
-  platforms           PlatformAccess[]
-  connectedPlatforms  ConnectedPlatform?  @relation(name: "UserToConnectedPlatform") // Make it optional with "?"
+  id                     String                 @id @default(cuid()) // userId
+  email                  String                 @unique
+  platformsConnectedTo   PlatformsConnectedTo?  @relation("UserPlatforms", fields: [platformsConnectedToId], references: [id])
+  platformsConnectedToId String?                @unique  // Added @unique to enforce one-to-one
+  wallpapers             UserWallpaper[]
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
 }
 
-model PlatformAccess {
-  id               String   @id @default(uuid())
-  platform         Platform // Enum for Chrome, Firefox, etc.
-  wallpaperId      String
-  wallpaperLink    String
-  wallpaperRef     String
-  userId           String
-  user             User     @relation(fields: [userId], references: [id])
+model PlatformsConnectedTo {
+  id        String   @id @default(cuid())
+  chrome    Boolean  @default(false)
+  firefox   Boolean  @default(false)
+  brave     Boolean  @default(false)
+  mobile    Boolean  @default(false)
+  desktop   Boolean  @default(false)
+  user      User?    @relation("UserPlatforms") // Only define relation name here
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt
 }
-model ConnectedPlatform {
-  id          String   @id @default(uuid())
-  chrome      Boolean  @default(false)
-  firefox     Boolean  @default(false)
-  brave       Boolean  @default(false)
-  mobile      Boolean  @default(false)
-  desktop     Boolean  @default(false)
-  userId      String   @unique
-  user        User     @relation(name: "UserToConnectedPlatform", fields: [userId], references: [id])
+
+model UserWallpaper {
+  id         String   @id @default(cuid()) // wallpaperId
+  platform Platform // Enum (Chrome, Firefox, etc.)
+  link       String   // wallpaperLink
+  ref        String   // wallpaperRef
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
 }
