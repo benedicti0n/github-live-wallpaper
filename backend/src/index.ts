@@ -1,14 +1,13 @@
-import express, { Request, Response, urlencoded } from "express";
-import { PrismaClient } from "@prisma/client";
+import express, { urlencoded } from "express";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from 'cors'
 
 import fetchGithubStats from "./routes/github.route"
-import user from "./routes/user.route"
+import { userCreateAndDelete } from "./utils/clerkWebhook";
 
 dotenv.config();
 const app = express();
-const prisma = new PrismaClient();
 
 const clietUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
@@ -17,11 +16,17 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
-app.use(express.json());
+// app.use(express.json());
 app.use(urlencoded({ extended: true }))
 
-app.use('/api/v1/', fetchGithubStats)
-app.use('/api/v1/', user)
+app.post(
+    "/api/webhooks",
+    bodyParser.raw({ type: "application/json" }),
+    userCreateAndDelete
+);
 
-const PORT = process.env.PORT || 5000;
+app.use('/api/v1/', fetchGithubStats)
+// app.use('/api/v1/', user)
+
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
