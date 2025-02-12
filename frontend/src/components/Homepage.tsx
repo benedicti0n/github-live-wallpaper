@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useClerk, useSession } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom'
 
 import Navbar from './Navbar';
 import Input from './ui/Input';
@@ -7,9 +9,13 @@ import GithubBento from './GithubBento/GithubBento';
 import { useGithubData } from '../hooks/useGithubData';
 import { removeGithubDataFromLocalStorage } from '../utils/removeLocalStorage';
 
-import { LucideSearch } from 'lucide-react';
+import { LucideSearch, LucideShare } from 'lucide-react';
 
 const Homepage = () => {
+    const navigate = useNavigate()
+    const { isSignedIn } = useSession()
+    const { openSignIn } = useClerk()
+
     const { githubData, fetchGithubData } = useGithubData()
     const [username, setUsername] = useState("")
 
@@ -46,6 +52,15 @@ const Homepage = () => {
                 ) : (
                     githubData === null && <h1>User not found</h1>
                 )}
+            </div>
+            <div className='mx-2'>
+                <Button text='Set As Wallpaper' onClickFunction={() => {
+                    if (isSignedIn) {
+                        navigate(`/dashboard`)
+                    } else {
+                        openSignIn()
+                    }
+                }} icon={<LucideShare />} />
             </div>
         </div>
     );
