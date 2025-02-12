@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from 'cors'
 import fetchGithubStats from "./routes/github.route"
+import fetchConnectedPlatformsDetails from "./routes/user.route"
 import { userCreateAndDelete } from "./utils/clerkWebhook";
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.post(
 );
 
 app.use('/api/v1/', fetchGithubStats);
+app.use('/api/v1/', fetchConnectedPlatformsDetails);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

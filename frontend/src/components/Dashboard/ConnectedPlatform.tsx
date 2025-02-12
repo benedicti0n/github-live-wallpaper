@@ -1,7 +1,21 @@
+import { ReactNode, useEffect } from 'react'
+import { useUser } from '@clerk/clerk-react'
 import { LucideCheck, LucideX } from 'lucide-react'
+
 import MiniButton from '../ui/MiniButton'
+import { useConnectedPlatforms } from '../../hooks/useConnectesPlatforms'
+
 
 const ConnectedPlatform = () => {
+    const { user } = useUser()
+    const userId = user?.id
+
+    const { platforms, fetchConnectedPlatformsDetails } = useConnectedPlatforms()
+
+    useEffect(() => {
+        fetchConnectedPlatformsDetails(userId)
+    }, [])
+
     return (
         <div className='h-full w-full flex flex-col'>
             <div className="flex">
@@ -14,20 +28,25 @@ const ConnectedPlatform = () => {
             <div className='w-1/2 h-full rounded-2xl py-2 mt-2 space-y-2'>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-[ChivoMedium] text-lg'>Chrome</h1>
-                    <MiniButton variant='success'><LucideCheck /></MiniButton>
+                    <MiniButton variant={platforms?.chrome ? "success" : "destructive"}>{platforms?.chrome ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-[ChivoMedium] text-lg'>Firefox</h1>
-                    <MiniButton variant='success'><LucideCheck /></MiniButton>
+                    <MiniButton variant={platforms?.firefox ? "success" : "destructive"}>{platforms?.firefox ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-[ChivoMedium] text-lg'>Mobile</h1>
-                    <MiniButton variant='success'><LucideCheck /></MiniButton>
+                    <MiniButton variant={platforms?.brave ? "success" : "destructive"}>{platforms?.brave ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-[ChivoMedium] text-lg'>Desktop</h1>
-                    <MiniButton variant='destructive'><LucideX /></MiniButton>
+                    <MiniButton variant={platforms?.mobile ? "success" : "destructive"}>{platforms?.mobile ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
+                <div className='w-full flex justify-between items-center'>
+                    <h1 className='font-[ChivoMedium] text-lg'>Desktop</h1>
+                    <MiniButton variant={platforms?.desktop ? "success" : "destructive"}>{platforms?.desktop ? <LucideCheck /> : <LucideX />}</MiniButton>
+                </div>
+
             </div>
 
         </div>

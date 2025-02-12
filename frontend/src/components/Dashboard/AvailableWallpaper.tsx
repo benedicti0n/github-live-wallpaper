@@ -20,7 +20,7 @@ const AvailableWallpaper = (props: IPlatfromDetails) => {
             {wallpapers && wallpapers.map((url, index) => (
                 <WallpaperPreview key={index} imageUrl={url} />
             ))}
-            <div className="h-full flex justify-center items-center border-2">
+            <div className="h-full flex justify-center items-center">
                 <MiniButton variant="default" onClickFunction={() => navigate(`/${platfrom}/create`)}>
                     <LucidePlus className="h-6 w-6" />
                 </MiniButton>

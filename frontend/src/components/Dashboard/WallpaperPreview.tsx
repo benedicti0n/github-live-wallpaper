@@ -31,7 +31,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
     }
 
     return (
-        <div className="border-2 w-72 h-40 rounded-xl relative mr-6">
+        <div className="w-72 h-40 rounded-xl relative mr-6">
             <img src={`${imageUrl}`} alt={`${imageUrl}`} className="bg-cover bg-center bg-no-repeat rounded-lg w-full h-full" onClick={previewWallpaper} />
             <div className="absolute top-0 right-0 m-1 z-10">
                 <MiniButton variant="default" className="mx-1" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-4 w-4" /></MiniButton>
