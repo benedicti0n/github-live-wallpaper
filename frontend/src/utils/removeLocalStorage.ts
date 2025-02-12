@@ -13,5 +13,5 @@ export const removeGithubDataFromLocalStorage = async () => {
         console.log(`Executing task #${taskCounter}`);
         localStorage.removeItem("githubData");
         timeoutId = null; // Reset the timeoutId after execution
-    }, 120000);
+    }, 10 * 60 * 1000);
 }
