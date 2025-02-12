@@ -71,6 +71,18 @@ export const userCreateAndDelete = async (req: Request, res: Response) => {
                 }
             })
         } else if (eventType === 'user.deleted') {
+            // Check if user exists before attempting to delete
+            const user = await prisma.user.findUnique({
+                where: { id: userId },
+            })
+
+            if (!user) {
+                return void res.status(404).json({
+                    success: false,
+                    message: 'User not found',
+                })
+            }
+
             // Delete user and related records from the database
             await prisma.user.delete({
                 where: { id: userId },
