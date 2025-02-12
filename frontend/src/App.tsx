@@ -4,6 +4,7 @@ import { useSession } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import CreateWallaper from "./components/Create/CreateWallaper";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -33,6 +34,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/:platform/create" element={<CreateWallaper />} />
       </Routes>
     </div>
   );
