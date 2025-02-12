@@ -70,4 +70,6 @@ type GithubData = {
     };
 };
 
+export type ColorPaletteType = 'earthTones' | 'coolBlue' | 'forestGreen' | 'vividPurple' | 'warmSunset';
+
 export default GithubData

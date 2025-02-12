@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useState } from 'react';
+import ColorPaletteSelector from './ColorPaletteSelector';
 
 import { toJpeg, toPng } from 'html-to-image';
 import { UserDetails, ImageUploadState } from './types';
@@ -7,10 +8,7 @@ import { coolBluePalette, earthTonesPalette, forestGreenPalette, vividPurplePale
 import {
     LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit,
     LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser,
-    LucideFileImage, LucideImage, LucideFolderGit, LucideGitCommitVertical,
-    LucideChrome,
-    LucideDownload,
-    LucideShare,
+    LucideFileImage, LucideFolderGit, LucideGitCommitVertical,
 } from "lucide-react";
 import Button from '../ui/Button';
 import { useParams } from 'react-router-dom';
@@ -160,20 +158,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
 
                     {/* Color Palette Selection */}
-                    <div className="w-1/2 font-[ChivoRegular]">
-                        <label className="text-xl font-[ChivoMedium] block mb-2 invert">Select Color Palette:</label>
-                        <select
-                            value={selectedPalette}
-                            onChange={(e) => setSelectedPalette(e.target.value as ColorPaletteType)}
-                            className="invert p-2 border rounded-lg w-full shadow-sm"
-                        >
-                            <option value="earthTones">Earth Tones</option>
-                            <option value="coolBlue">Cool Blue</option>
-                            <option value="forestGreen">Forest Green</option>
-                            <option value="vividPurple">Vivid Purple</option>
-                            <option value="warmSunset">Warm Sunset</option>
-                        </select>
-                    </div>
+                    <ColorPaletteSelector selectedPalette={selectedPalette} setSelectedPalette={setSelectedPalette} />
 
                     {/* Image Upload Section */}
                     <div className="w-1/2 p-5 rounded-xl shadow-md font-[ChivoRegular]" style={{ background: `${colorPallete[selectedPalette].main1}`, color: `${colorPallete[selectedPalette].textColor}` }}>
