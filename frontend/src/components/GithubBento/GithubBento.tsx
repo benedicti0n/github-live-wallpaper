@@ -1,6 +1,4 @@
 import React, { useRef, useCallback, useState } from 'react';
-import { useClerk, useSession } from '@clerk/clerk-react';
-import { useNavigate } from 'react-router-dom'
 
 import { toJpeg, toPng } from 'html-to-image';
 import { UserDetails, ImageUploadState } from './types';
@@ -15,6 +13,7 @@ import {
     LucideShare,
 } from "lucide-react";
 import Button from '../ui/Button';
+import { useParams } from 'react-router-dom';
 
 const colorPallete = {
     earthTones: earthTonesPalette,
@@ -34,10 +33,10 @@ type ColorPaletteType = keyof typeof colorPallete;
 // ];
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
-    const navigate = useNavigate()
+    const { platform } = useParams<{ platform: string }>()
+    const url = window.location.pathname
+
     const componentRef = useRef<HTMLDivElement>(null);
-    const { isSignedIn } = useSession()
-    const { openSignIn } = useClerk()
 
     const [selectedPalette, setSelectedPalette] = useState<ColorPaletteType>('earthTones');
     const [selectedPosition, setSelectedPosition] = useState<keyof ImageUploadState>('TopLeft');
@@ -361,21 +360,12 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
 
 
             <div className='w-full flex justify-center items-center mt-6'>
-                <div className='mx-2'>
-                    <Button text='Set As Wallpaper' onClickFunction={() => {
-                        if (isSignedIn) {
-                            navigate(`/dashboard`)
-                        } else {
-                            openSignIn()
-                        }
-                    }} icon={<LucideShare />} />
-                </div>
-                {/* <div className='mx-2'>
-                    <Button text='Export As JPEG' onClickFunction={() => handleExport("jpeg")} icon={<LucideFileImage />} />
-                </div>
-                <div className='mx-2'>
-                    <Button text="Export As PNG" onClickFunction={() => handleExport("png")} icon={<LucideImage />} />
-                </div> */}
+                {
+                    url === `/${platform}/create` &&
+                    <div className='mx-2'>
+                        <Button text='Export As PNG' onClickFunction={() => handleExport("png")} icon={<LucideFileImage />} />
+                    </div>
+                }
             </div>
         </React.Fragment >
     );
