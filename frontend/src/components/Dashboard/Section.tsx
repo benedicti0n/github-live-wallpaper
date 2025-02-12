@@ -13,7 +13,7 @@ const Section = (props: SectionProps) => {
                     {props.heading}
                 </h1>
             </div>
-            <AvailableWallpaper />
+            <AvailableWallpaper platform={props.heading} />
         </div>
     )
 }
