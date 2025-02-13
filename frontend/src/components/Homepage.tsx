@@ -48,19 +48,21 @@ const Homepage = () => {
                 </div>
 
                 {githubData ? (
-                    <GithubBento githubData={githubData} />
+                    <div>
+                        <GithubBento githubData={githubData} />
+                        <div className='mx-2'>
+                            <Button text='Set As Wallpaper' onClickFunction={() => {
+                                if (isSignedIn) {
+                                    navigate(`/dashboard`)
+                                } else {
+                                    openSignIn()
+                                }
+                            }} icon={<LucideShare />} />
+                        </div>
+                    </div>
                 ) : (
-                    githubData === null && <h1>User not found</h1>
+                    <h1>User not found</h1>
                 )}
-            </div>
-            <div className='mx-2'>
-                <Button text='Set As Wallpaper' onClickFunction={() => {
-                    if (isSignedIn) {
-                        navigate(`/dashboard`)
-                    } else {
-                        openSignIn()
-                    }
-                }} icon={<LucideShare />} />
             </div>
         </div>
     );
