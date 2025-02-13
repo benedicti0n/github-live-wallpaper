@@ -48,7 +48,7 @@ const Homepage = () => {
                 </div>
 
                 {githubData ? (
-                    <div>
+                    <div className='w-full flex flex-col items-center justify-center'>
                         <GithubBento githubData={githubData} />
                         <div className='mx-2'>
                             <Button text='Set As Wallpaper' onClickFunction={() => {
