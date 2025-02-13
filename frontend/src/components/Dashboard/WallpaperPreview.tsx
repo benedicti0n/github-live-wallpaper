@@ -20,8 +20,8 @@ const PreviewModal = ({ imageUrl, closeModal }: { imageUrl: string, closeModal: 
                     style={{ backgroundImage: `url(${imageUrl})` }}
                     onClick={(e) => e.stopPropagation()}
                 />
-                <div className="absolute top-2 right-2 m-1 z-10">
-                    <MiniButton variant="default" className="mx-1" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-6 w-6" /></MiniButton>
+                <div className="absolute top-2 right-2 z-10">
+                    <MiniButton variant="default" className="mx-2" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-6 w-6" /></MiniButton>
                     <MiniButton variant="destructive"><LucideTrash2 className="h-6 w-6" /></MiniButton>
                 </div>
             </div>
@@ -41,7 +41,7 @@ const WallpaperPreview = ({ imageUrl }: { imageUrl: string }) => {
         <div className="w-72 h-40 rounded-xl relative mr-6">
             <img src={`${imageUrl}`} alt={`${imageUrl}`} className="bg-cover bg-center bg-no-repeat rounded-lg w-full h-full" onClick={previewWallpaper} />
             <div className="absolute top-0 right-0 m-1 z-10">
-                <MiniButton variant="default" className="mx-2" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-4 w-4" /></MiniButton>
+                <MiniButton variant="default" className="mx-1" onClickFunction={() => { navigate(`/edit/${wallpaperId}`) }}><LucidePen className="h-4 w-4" /></MiniButton>
                 <MiniButton variant="destructive"><LucideTrash2 className="h-4 w-4" /></MiniButton>
             </div>
 
