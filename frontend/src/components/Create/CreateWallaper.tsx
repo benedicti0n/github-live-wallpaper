@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
 import GithubBento from '../GithubBento/GithubBento';
 import Navbar from '../Navbar';
 import Input from '../ui/Input';
@@ -10,7 +9,6 @@ import { useGithubData } from '../../hooks/useGithubData';
 import { removeGithubDataFromLocalStorage } from '../../utils/removeLocalStorage';
 
 const CreateWallaper = () => {
-    const { platform } = useParams<{ platform: string }>();
     const githubDataFromLocalStorage: UserDetails | null = localStorage.getItem("githubData")
         ? JSON.parse(localStorage.getItem("githubData") as string)
         : null;
