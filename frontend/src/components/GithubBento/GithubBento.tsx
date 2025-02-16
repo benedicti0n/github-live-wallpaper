@@ -1,17 +1,19 @@
 import React, { useRef, useCallback, useState } from 'react';
 import ColorPaletteSelector from './ColorPaletteSelector';
 
-import { toJpeg, toPng } from 'html-to-image';
+import { toPng } from 'html-to-image';
 import { UserDetails, ImageUploadState } from './types';
 import GithubGraph from "../GithubGraph";
 import { coolBluePalette, earthTonesPalette, forestGreenPalette, vividPurplePalette, warmSunsetPalette } from "./ColorHues";
 import {
     LucideCalendar, LucideEllipsis, LucideFlame, LucideGitBranch, LucideGitCommit,
-    LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser,
-    LucideFileImage, LucideFolderGit, LucideGitCommitVertical,
+    LucideGitPullRequest, LucideMapPinHouse, LucideStar, LucideUser, LucideFolderGit, LucideGitCommitVertical,
+    LucideSave,
 } from "lucide-react";
 import Button from '../ui/Button';
+import { saveWallpaper } from '../Create/saveWallpaper';
 import { useParams } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 const colorPallete = {
     earthTones: earthTonesPalette,
@@ -31,7 +33,6 @@ type ColorPaletteType = keyof typeof colorPallete;
 // ];
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
-    const { platform } = useParams<{ platform: string }>()
     const url = window.location.pathname
 
     const componentRef = useRef<HTMLDivElement>(null);
@@ -85,8 +86,15 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         handleImageInput(selectedPosition, event.target.value);
     };
 
-    const handleExport = useCallback(async (type: 'png' | 'jpeg') => {
+    const { platform } = useParams<{ platform: string }>();
+    const { user } = useUser()
+    const userId = user?.id
+    const refInnerHTML = componentRef.current?.innerHTML
+
+    const handleSave = useCallback(async () => {
+
         if (!componentRef.current) return;
+        console.log("cliked");
 
         const options = {
             cacheBust: true,
@@ -96,19 +104,23 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         };
 
         try {
-            // Choose export function based on type
-            const exportFunction = type === 'png' ? toPng : toJpeg;
-            const dataUrl = await exportFunction(componentRef.current, options);
+            //convert component to image data url
+            const dataUrl = await toPng(componentRef.current, options);
 
-            // Create and trigger download
-            const link = document.createElement('a');
-            link.download = `github-bento.${type}`;
-            link.href = dataUrl;
-            link.click();
+            //convert data url to blob for uploading
+            const blob = await (await fetch(dataUrl)).blob()
+
+            const formData = new FormData()
+            formData.append("image", blob)
+            formData.append("platformOf", platform || "")
+            formData.append("ref", JSON.stringify(refInnerHTML))
+            formData.append("userId", userId || "")
+
+            saveWallpaper(formData)
         } catch (err) {
-            console.error(`Error exporting as ${type}:`, err);
+            console.error(`Error exporting as `, err);
         }
-    }, [componentRef]);
+    }, [componentRef, platform, userId, refInnerHTML]);
 
     // Image component with fallback and original source tracking
     const ImageUploadSection = ({ position }: { position: keyof ImageUploadState }) => (
@@ -348,7 +360,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                 {
                     url === `/${platform}/create` &&
                     <div className='mx-2'>
-                        <Button text='Export As PNG' onClickFunction={() => handleExport("png")} icon={<LucideFileImage />} />
+                        <Button text='Save' onClickFunction={() => handleSave()} icon={<LucideSave />} />
                     </div>
                 }
             </div>
