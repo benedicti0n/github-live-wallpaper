@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useUser } from '@clerk/clerk-react'
 import { LucideCheck, LucideX } from 'lucide-react'
 
