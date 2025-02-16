@@ -10,7 +10,7 @@ export const useGithubData = () => {
         if (!username.trim()) return alert("Enter a GitHub username!");
 
         try {
-            const response = await fetch(`${serverUrl}/api/v1/fetchGithubStats`, {
+            const response = await fetch(`${serverUrl}/api/v1/github/fetchGithubStats`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username }),

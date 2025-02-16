@@ -8,7 +8,7 @@ export const useConnectedPlatforms = () => {
 
     const fetchConnectedPlatformsDetails = async (userId?: string) => {
         try {
-            const response = await fetch(`${serverUrl}/api/v1/fetchConnectedPlatformsDetails`, {
+            const response = await fetch(`${serverUrl}/api/v1/user/fetchConnectedPlatformsDetails`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId }),
