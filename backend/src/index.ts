@@ -2,8 +2,9 @@ import express, { urlencoded } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from 'cors'
-import fetchGithubStats from "./routes/github.route"
-import fetchConnectedPlatformsDetails from "./routes/user.route"
+import githubRoutes from "./routes/github.route"
+import userRoutes from "./routes/user.route"
+import wallpaperRoutes from "./routes/wallpaper.route"
 import { userCreateAndDelete } from "./utils/clerkWebhook";
 
 dotenv.config();
@@ -33,8 +34,9 @@ app.post(
     userCreateAndDelete
 );
 
-app.use('/api/v1/', fetchGithubStats);
-app.use('/api/v1/', fetchConnectedPlatformsDetails);
+app.use('/api/v1/github', githubRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/wallpaper', wallpaperRoutes)
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
