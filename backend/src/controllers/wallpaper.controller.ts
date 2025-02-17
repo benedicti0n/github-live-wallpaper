@@ -6,9 +6,6 @@ import crypto from "crypto";
 import { Platform } from "@prisma/client";
 
 export const saveWallpaper = async (req: Request, res: Response) => {
-    const data = req.body;
-    // console.log(data);
-
     try {
         if (!req.file) {
             res.status(400).json({ error: "No file uploaded" });
@@ -22,7 +19,6 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         }
 
         const platformUpperCase = platformOf.toUpperCase()
-        console.log(platformUpperCase);
 
         // Validate platformOf against the Platform enum
         if (!Object.values(Platform).includes(platformUpperCase)) {
@@ -31,7 +27,15 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         }
 
         // Generate unique filename
-        const fileName = `wallpapers/${userId}-${crypto.randomUUID()}.png`;
+        const fileName = `${userId}.png`;
+
+        console.log(req.file);
+
+        console.log("AWS_BUCKET_NAME:", process.env.AWS_BUCKET_NAME);
+        console.log("AWS_REGION:", process.env.AWS_REGION);
+        console.log("AWS_ACCESS_KEY_ID:", process.env.AWS_ACCESS_KEY);
+        console.log("AWS_SECRET_ACCESS_KEY:", process.env.AWS_SECRET_KEY);
+
 
         // Upload to S3
         const uploadParams = {
@@ -39,7 +43,6 @@ export const saveWallpaper = async (req: Request, res: Response) => {
             Key: fileName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype,
-            ACL: "public-read" as const,
         };
 
         await s3.send(new PutObjectCommand(uploadParams));
@@ -50,7 +53,7 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         // Save to Database
         const newWallpaper = await prisma.userWallpaper.create({
             data: {
-                platformOf: platformOf as Platform,
+                platform: platformOf,
                 link: wallpaperS3Link,
                 ref,
                 userId,
