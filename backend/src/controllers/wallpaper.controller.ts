@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import s3 from "../utils/s3";
 import prisma from "../utils/prisma";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import crypto from "crypto";
 import { Platform } from "@prisma/client";
 
 export const saveWallpaper = async (req: Request, res: Response) => {
@@ -29,14 +28,6 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         // Generate unique filename
         const fileName = `${userId}.png`;
 
-        console.log(req.file);
-
-        console.log("AWS_BUCKET_NAME:", process.env.AWS_BUCKET_NAME);
-        console.log("AWS_REGION:", process.env.AWS_REGION);
-        console.log("AWS_ACCESS_KEY_ID:", process.env.AWS_ACCESS_KEY);
-        console.log("AWS_SECRET_ACCESS_KEY:", process.env.AWS_SECRET_KEY);
-
-
         // Upload to S3
         const uploadParams = {
             Bucket: process.env.AWS_BUCKET_NAME!,
@@ -53,7 +44,7 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         // Save to Database
         const newWallpaper = await prisma.userWallpaper.create({
             data: {
-                platform: platformOf,
+                platform: platformUpperCase as Platform,
                 link: wallpaperS3Link,
                 ref,
                 userId,
