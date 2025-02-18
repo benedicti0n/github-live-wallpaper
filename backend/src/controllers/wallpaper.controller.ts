@@ -38,10 +38,10 @@ export const saveWallpaper = async (req: Request, res: Response) => {
 
         await s3.send(new PutObjectCommand(uploadParams));
 
-        // Construct the image URL
+        // // Construct the image URL
         const wallpaperS3Link = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
 
-        // Save to Database
+        // // Save to Database
         const newWallpaper = await prisma.userWallpaper.create({
             data: {
                 platform: platformUpperCase as Platform,
