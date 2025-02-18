@@ -94,7 +94,6 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const handleSave = useCallback(async () => {
 
         if (!componentRef.current) return;
-        console.log("cliked");
 
         const options = {
             cacheBust: true,
