@@ -21,10 +21,6 @@ export const fetchUserDetails = async (username: string): Promise<UserDetails> =
     const userDetails: UserDetails = getUserStats(user);
     userDetails.username = username;
 
-
-    console.log(userDetails);
-
-
     return userDetails;
 };
 
