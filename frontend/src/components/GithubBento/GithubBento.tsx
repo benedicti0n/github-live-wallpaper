@@ -89,10 +89,8 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const { platform } = useParams<{ platform: string }>();
     const { user } = useUser()
     const userId = user?.id
-    const refInnerHTML = componentRef.current?.innerHTML
 
     const handleSave = useCallback(async () => {
-
         if (!componentRef.current) return;
 
         const options = {
@@ -105,9 +103,12 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         try {
             //convert component to image data url
             const dataUrl = await toPng(componentRef.current, options);
+            console.log(componentRef.current.innerHTML);
 
             //convert data url to blob for uploading
             const blob = await (await fetch(dataUrl)).blob()
+
+            const refInnerHTML = componentRef.current?.innerHTML;
 
             const formData = new FormData()
             formData.append("image", blob)
@@ -119,7 +120,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         } catch (err) {
             console.error(`Error exporting as `, err);
         }
-    }, [componentRef, platform, userId, refInnerHTML]);
+    }, [componentRef, platform, userId]);
 
     // Image component with fallback and original source tracking
     const ImageUploadSection = ({ position }: { position: keyof ImageUploadState }) => (
