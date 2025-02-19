@@ -347,7 +347,8 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                                 <ImageUploadSection position="BottomLeft" />
                             </div>
                             <div className="h-full w-9/10 rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete[selectedPalette].main4}` }}>
-                                <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete[selectedPalette].githubHeatmap[0], colorPallete[selectedPalette].githubHeatmap[1], colorPallete[selectedPalette].githubHeatmap[2], colorPallete[selectedPalette].githubHeatmap[3], colorPallete[selectedPalette].githubHeatmap[4]]} />
+                                <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete[selectedPalette].githubHeatmap[0], colorPallete[selectedPalette].githubHeatmap[1], colorPallete[selectedPalette].githubHeatmap[2], colorPallete[selectedPalette].githubHeatmap[3], colorPallete[selectedPalette].githubHeatmap[4]]}
+                                    scrollbarColor1={`${colorPallete[selectedPalette].main2}`} scrollbarColor2={`${colorPallete[selectedPalette].main4}`} />
                             </div>
                         </div>
                     </div>

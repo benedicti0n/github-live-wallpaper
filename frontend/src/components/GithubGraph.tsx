@@ -7,12 +7,16 @@ type GithubGraphProps = {
   username: string;
   blockMargin?: number;
   colorPallete?: string[];
+  scrollbarColor1: string;
+  scrollbarColor2: string;
 };
 
 const GithubGraph = ({
   username,
   blockMargin,
   colorPallete,
+  scrollbarColor1,
+  scrollbarColor2,
 }: GithubGraphProps) => {
   const [contribution, setContribution] = useState<Activity[]>([]);
   const [loading, setIsLoading] = useState<boolean>(true);
@@ -39,6 +43,10 @@ const GithubGraph = ({
   return (
     <>
       <ActivityCalendar
+        style={{
+          scrollbarColor: `${scrollbarColor1} ${scrollbarColor2}`,
+          scrollbarWidth: 'thin',
+        }}
         data={contribution}
         maxLevel={4}
         blockMargin={blockMargin ?? 2}
