@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Button from '../ui/Button';
 import { saveWallpaper } from '../Create/saveWallpaper';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 
 const colorPallete = {
@@ -33,6 +33,7 @@ type ColorPaletteType = keyof typeof colorPallete;
 // ];
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
+    const navigate = useNavigate()
     const url = window.location.pathname
 
     const componentRef = useRef<HTMLDivElement>(null);
@@ -117,6 +118,7 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
             formData.append("userId", userId || "")
 
             saveWallpaper(formData)
+            navigate("/dashboard")
         } catch (err) {
             console.error(`Error exporting as `, err);
         }
