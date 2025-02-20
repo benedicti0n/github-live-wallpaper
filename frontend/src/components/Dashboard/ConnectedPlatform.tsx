@@ -19,7 +19,7 @@ const ConnectedPlatform = () => {
     return (
         <div className='h-full w-full flex flex-col'>
             <div className="flex">
-                <h1 className="font-[ChivoMedium] text-3xl relative inline-block underline">
+                <h1 className="font-[ChivoMedium] text-3xl relative inline-block">
                     <span className="w-full h-1 absolute bottom-0 shadow-md shadow-blue-700/60 rounded-lg bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-600"></span>
                     Connected Platforms
                 </h1>
