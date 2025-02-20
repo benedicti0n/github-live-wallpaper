@@ -26,7 +26,7 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         }
 
         // Generate unique filename
-        const fileName = `${userId}.png`;
+        const fileName = `${userId}-${platformOf}.png`;
 
         // Upload to S3
         const uploadParams = {
