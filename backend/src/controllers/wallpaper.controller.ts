@@ -57,3 +57,47 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
+
+export const fetchPreviewWallpapers = async (req: Request, res: Response) => {
+    const { userId } = req.body;
+    try {
+        const wallpapers = await prisma.userWallpaper.findMany({
+            where: { userId },
+            select: {
+                platform: true,
+                link: true,
+                id: true,
+            },
+        });
+
+        const formattedWallpapers = {
+            extension: [
+                { wallpaperId: '', link: [''] },
+            ],
+            mobile: [
+                { wallpaperId: '', link: [''] },
+            ],
+            desktop: [
+                { wallpaperId: '', link: [''] },
+            ],
+        };
+
+        wallpapers.forEach(wallpaper => {
+            if (wallpaper.platform === 'EXTENSION') {
+                formattedWallpapers.extension[0].wallpaperId = wallpaper.id;
+                formattedWallpapers.extension[0].link = [wallpaper.link];
+            } else if (wallpaper.platform === 'MOBILE') {
+                formattedWallpapers.mobile[0].wallpaperId = wallpaper.id;
+                formattedWallpapers.mobile[0].link = [wallpaper.link];
+            } else if (wallpaper.platform === 'DESKTOP') {
+                formattedWallpapers.desktop[0].wallpaperId = wallpaper.id;
+                formattedWallpapers.desktop[0].link = [wallpaper.link];
+            }
+        });
+
+        res.status(200).json({ success: true, wallpapers: formattedWallpapers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
