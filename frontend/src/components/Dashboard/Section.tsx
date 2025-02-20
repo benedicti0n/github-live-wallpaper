@@ -2,6 +2,10 @@ import AvailableWallpaper from "./AvailableWallpaper"
 
 interface SectionProps {
     heading: string
+    wallpapers: [{
+        wallpaperId: string,
+        link: string,
+    }] | undefined
 }
 
 const Section = (props: SectionProps) => {
@@ -13,7 +17,7 @@ const Section = (props: SectionProps) => {
                     {props.heading}
                 </h1>
             </div>
-            <AvailableWallpaper platform={props.heading} />
+            <AvailableWallpaper platform={props.heading} wallpapers={props.wallpapers} />
         </div>
     )
 }

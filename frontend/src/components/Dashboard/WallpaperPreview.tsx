@@ -11,10 +11,10 @@ const PreviewModal = ({ imageUrl, closeModal }: { imageUrl: string, closeModal: 
     const navigate = useNavigate()
     return (
         <div
-            className="fixed inset-0 z-50 backdrop-blur-xs bg-opacity-75 flex justify-center items-center"
+            className="fixed inset-0 z-50 bg-opacity-75 flex justify-center items-center"
             onClick={closeModal}
         >
-            <div className="w-2/3 h-2/3 rounded-xl relative">
+            <div className="w-2/3 h-2/3 rounded-xl border-2 relative">
                 <div
                     className="w-full h-full bg-cover bg-center rounded-xl"
                     style={{ backgroundImage: `url(${imageUrl})` }}
