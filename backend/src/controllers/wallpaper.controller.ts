@@ -59,7 +59,6 @@ export const saveWallpaper = async (req: Request, res: Response) => {
 }
 export const deleteWallpaper = async (req: Request, res: Response) => {
     const { wallpaperId, platformOf, userId } = req.body;
-    console.log(wallpaperId, platformOf, userId);
 
     try {
         await prisma.userWallpaper.delete({
