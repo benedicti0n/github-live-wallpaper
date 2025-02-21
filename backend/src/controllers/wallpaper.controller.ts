@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import s3 from "../utils/s3";
 import prisma from "../utils/prisma";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { Platform } from "@prisma/client";
 
 export const saveWallpaper = async (req: Request, res: Response) => {
@@ -54,6 +54,27 @@ export const saveWallpaper = async (req: Request, res: Response) => {
         res.status(201).json({ message: "Wallpaper saved", newWallpaper });
     } catch (error) {
         console.error("Upload error:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+export const deleteWallpaper = async (req: Request, res: Response) => {
+    const { wallpaperId, platformOf, userId } = req.body;
+    console.log(wallpaperId, platformOf, userId);
+
+    try {
+        await prisma.userWallpaper.delete({
+            where: { id: wallpaperId }
+        })
+
+        const fileName = `${userId}-${platformOf}.png`;
+
+        const deleteParams = {
+            Bucket: process.env.AWS_BUCKET_NAME!,
+            Key: fileName,
+        }
+
+        await s3.send(new DeleteObjectCommand(deleteParams));
+    } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
 }
