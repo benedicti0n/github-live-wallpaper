@@ -6,6 +6,8 @@ import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
 import { DotPattern } from './magicui/dot-pattern';
+import { LineShadowText } from './magicui/line-shadow-text';
+import { SparklesText } from './magicui/sparkles-text';
 
 import { useGithubData } from '../hooks/useGithubData';
 import { removeGithubDataFromLocalStorage } from '../utils/removeLocalStorage';
@@ -29,14 +31,14 @@ const Homepage = () => {
 
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
-            <div className="w-full h-full flex flex-col justify-center items-center py-16">
+        <div className="w-full min-h-screen flex flex-col items-center relative">
+            <div className="w-full h-full flex flex-col items-center mt-48 py-16">
                 <DotPattern height={32} width={32} />
-                <h1 className="text-7xl font-extrabold bg-gradient-to-br from-blue-900 via-blue-600 to-blue-900 bg-clip-text text-transparent">
-                    Github Live Wallpaper
-                </h1>
-                <p className="text-xl font-semibold mt-2">Generate yours now 👇🏼</p>
-                <div className="mt-4 gap-1 flex">
+                <LineShadowText className='text-8xl font-extrabold italic' shadowColor='black'>
+                    GitPaper
+                </LineShadowText>
+                {/* <p className="text-xl font-semibold mt-2">Generate yours now 👇🏼</p> */}
+                <div className="mt-8 gap-2 flex">
                     <Input
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -49,7 +51,7 @@ const Homepage = () => {
                     }} />
                 </div>
 
-                {githubData ? (
+                {githubData && (
                     <div className='w-full flex flex-col items-center justify-center'>
                         <GithubBento githubData={githubData} />
                         <div className='mx-2'>
@@ -62,10 +64,7 @@ const Homepage = () => {
                             }} icon={<LucideShare />} />
                         </div>
                     </div>
-                ) : (
-                    <h1>User not found</h1>
-                )
-                }
+                )}
             </div >
         </div >
     );
