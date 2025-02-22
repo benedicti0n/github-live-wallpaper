@@ -7,7 +7,6 @@ import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
 import { DotPattern } from './magicui/dot-pattern';
 import { LineShadowText } from './magicui/line-shadow-text';
-import { SparklesText } from './magicui/sparkles-text';
 
 import { useGithubData } from '../hooks/useGithubData';
 import { removeGithubDataFromLocalStorage } from '../utils/removeLocalStorage';
@@ -52,7 +51,7 @@ const Homepage = () => {
                 </div>
 
                 {githubData && (
-                    <div className='w-full flex flex-col items-center justify-center'>
+                    <div className='w-full flex flex-col items-center justify-center mt-4'>
                         <GithubBento githubData={githubData} />
                         <div className='mx-2'>
                             <Button text='Set As Wallpaper' onClickFunction={() => {
