@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
-import { DotPattern } from './magicui/dot-pattern';
 import { LineShadowText } from './magicui/line-shadow-text';
 
 import { useGithubData } from '../hooks/useGithubData';
@@ -32,7 +31,6 @@ const Homepage = () => {
     return (
         <div className="w-full min-h-screen flex flex-col items-center relative">
             <div className="w-full h-full flex flex-col items-center mt-48 py-16">
-                <DotPattern height={32} width={32} />
                 <LineShadowText className='text-8xl font-extrabold italic' shadowColor='black'>
                     GitPaper
                 </LineShadowText>

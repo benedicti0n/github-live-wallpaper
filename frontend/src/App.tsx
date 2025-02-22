@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useSession } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 import { NavBar } from "./components/ui/Navbar";
+import { DotPattern } from "./components/magicui/dot-pattern";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateWallaper from "./components/Create/CreateWallaper";
@@ -36,6 +37,7 @@ const App = () => {
   return (
     <div className="w-full min-h-screen flex justify-center bg-background relative">
       <NavBar items={navItems} />
+      <DotPattern height={32} width={32} />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
