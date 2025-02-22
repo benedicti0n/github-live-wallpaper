@@ -99,7 +99,7 @@ export function NavBar({ items, className }: NavBarProps) {
               scale={0.9}
             />
             <SignInButton>
-              <button className="relative bg-background cursor-pointer text-sm font-semibold px-6 py-2 rounded-full flex items-center justify-center">
+              <button className="relative bg-background cursor-pointer text-sm font-semibold px-6 py-2 gap-2 rounded-full flex items-center justify-center">
                 <h1>SignIn</h1>
                 <ArrowRight size={18} strokeWidth={2} />
               </button>
@@ -107,7 +107,16 @@ export function NavBar({ items, className }: NavBarProps) {
           </SignedOut>
 
           <SignedIn>
-            <UserButton />
+            <GlowEffect
+              colors={['#FF5733', '#33FF57', '#3357FF', '#F1C40F']}
+              mode='colorShift'
+              blur='soft'
+              duration={3}
+              scale={0.9}
+            />
+            <button className="relative bg-background cursor-pointer text-sm font-semibold rounded-full flex items-center justify-center">
+              <UserButton />
+            </button>
           </SignedIn>
         </div>
       </div>
