@@ -2,9 +2,12 @@
 import { Routes, Route } from "react-router-dom";
 import { useSession } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
+import { NavBar } from "./components/ui/Navbar";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateWallaper from "./components/Create/CreateWallaper";
+
+import { Home, User, Briefcase } from 'lucide-react'
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -21,9 +24,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+
 const App = () => {
+  const { isSignedIn } = useSession()
+
+  const navItems = [
+    { name: 'Home', url: '/', icon: Home },
+    ...(isSignedIn ? [{ name: 'Dashboard', url: '/dashboard', icon: User }] : []),
+    { name: 'Download', url: '/Download', icon: Briefcase },
+  ]
   return (
-    <div className="w-full min-h-screen flex justify-center bg-[#e8e8e8] relative">
+    <div className="w-full min-h-screen flex justify-center bg-background relative">
+      <NavBar items={navItems} />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route

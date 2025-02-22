@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import GithubBento from '../GithubBento/GithubBento';
-import Navbar from '../Navbar';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import { LucideSearch } from 'lucide-react';
@@ -25,7 +24,6 @@ const CreateWallaper = () => {
 
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
-            <Navbar />
             <div className="w-full h-full flex flex-col justify-center items-center py-16">
                 {
                     !githubDataFromLocalStorage &&

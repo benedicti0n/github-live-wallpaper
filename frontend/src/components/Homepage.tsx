@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useClerk, useSession } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom'
 
-import Navbar from './Navbar';
 import Input from './ui/Input';
 import Button from './ui/Button';
 import GithubBento from './GithubBento/GithubBento';
+import { DotPattern } from './magicui/dot-pattern';
+
 import { useGithubData } from '../hooks/useGithubData';
 import { removeGithubDataFromLocalStorage } from '../utils/removeLocalStorage';
 
@@ -26,10 +27,11 @@ const Homepage = () => {
         }
     };
 
+
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
-            <Navbar />
             <div className="w-full h-full flex flex-col justify-center items-center py-16">
+                <DotPattern height={32} width={32} />
                 <h1 className="text-7xl font-extrabold bg-gradient-to-br from-blue-900 via-blue-600 to-blue-900 bg-clip-text text-transparent">
                     Github Live Wallpaper
                 </h1>
@@ -62,9 +64,10 @@ const Homepage = () => {
                     </div>
                 ) : (
                     <h1>User not found</h1>
-                )}
-            </div>
-        </div>
+                )
+                }
+            </div >
+        </div >
     );
 };
 
