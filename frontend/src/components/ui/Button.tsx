@@ -17,7 +17,7 @@ const Button = ({
     className = ""
 }: ButtonProps) => {
     return (
-        <div className="flex items-center font-semibold rounded-xl hover:scale-105 ease-in-out duration-300 text-base relative">
+        <div className="flex items-center font-semibold rounded-xl hover:scale-105 ease-in-out duration-300 text-base relative border border-border">
             <GlowEffect
                 colors={['#FF5733', '#33FF57', '#3357FF', '#F1C40F']}
                 mode='colorShift'
