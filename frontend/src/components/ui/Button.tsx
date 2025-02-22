@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { GlowEffect } from "./glow-effect";
 
 interface ButtonProps {
     text?: string;
@@ -16,18 +17,24 @@ const Button = ({
     className = ""
 }: ButtonProps) => {
     return (
-        <button className={`brightness-150 dark:brightness-100 group hover:shadow-lg hover:shadow-blue-700/60 transition ease-in-out hover:scale-105 p-1 rounded-xl bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-600 ${className}`}
-            onClick={onClickFunction}
-            type="button"
-        >
-            <div className="px-6 py-2 backdrop-blur-xl bg-[#e8e8e8] rounded-lg font-semibold w-full h-full">
-                <div className="group-hover:scale-100 flex items-center justify-center group-hover:text-blue-500 text-blue-600 gap-1">
-                    {text}
-                    {children}
-                    {icon}
-                </div>
-            </div>
-        </button>
+        <div className="flex items-center font-semibold rounded-xl hover:scale-105 ease-in-out duration-300 text-base relative">
+            <GlowEffect
+                colors={['#FF5733', '#33FF57', '#3357FF', '#F1C40F']}
+                mode='colorShift'
+                blur='soft'
+                duration={3}
+                scale={0.9}
+            />
+            <button className={`flex justify-center items-center px-6 py-2 gap-2 bg-background z-10 rounded-xl h-full w-full ${className}`}
+                onClick={onClickFunction}
+                type="button"
+            >
+                {text}
+                {children}
+                {icon}
+            </button>
+        </div>
+
     );
 };
 
