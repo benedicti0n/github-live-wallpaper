@@ -1,13 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { atom, useAtom } from "jotai"
 
 import MiniButton from "../ui/MiniButton"
 import PreviewModal from "../ui/Modals/PreviewModal"
 import ConfirmDeleteModal from "../ui/Modals/ConfirmDeleteModal"
 import { LucidePen, LucideTrash2 } from "lucide-react"
-
-const modalOpen = atom<boolean>(false)
 
 interface IWallpaperPreview {
     imageUrl: string;
@@ -18,18 +15,16 @@ interface IWallpaperPreview {
 
 const WallpaperPreview = (props: IWallpaperPreview) => {
     const navigate = useNavigate()
-    const [isModalOpen, setIsModalOpen] = useAtom(modalOpen)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isDeleteConfirmModalOpen, setIsDeleteConfirmModal] = useState(false)
 
     const previewWallpaper = () => {
-        setIsModalOpen((prev) => !prev)
+        setIsModalOpen(true)
     }
-
-    const [isDeleteConfirmModalOpen, setIsDeleteConfirmModal] = useState(false)
 
     const openDeleteConfirmModal = () => {
         setIsDeleteConfirmModal((prev) => !prev)
     }
-
 
     return (
         <div className="w-72 h-40 rounded-xl relative mr-6 border-2">
@@ -41,7 +36,7 @@ const WallpaperPreview = (props: IWallpaperPreview) => {
 
             {isDeleteConfirmModalOpen && <ConfirmDeleteModal closeModal={() => setIsDeleteConfirmModal(false)} wallpaperId={props.wallpaperId} platformOf={props.platformOf} userId={props.userId} />}
 
-            {isModalOpen && <PreviewModal imageUrl={props.imageUrl} closeModal={() => setIsModalOpen(false)} />}
+            {isModalOpen && <PreviewModal imageUrl={props.imageUrl} closeModal={() => setIsModalOpen(false)} platformOf={props.platformOf} />}
         </div>
     )
 }

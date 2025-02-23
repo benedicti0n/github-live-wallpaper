@@ -49,7 +49,7 @@ const Dashboard = () => {
     }, [])
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
-            <div className="w-3/4 h-full flex flex-col justify-center items-center mt-5">
+            <div className="w-3/4 h-full flex flex-col justify-center items-center mt-32">
                 <div className="h-full w-full flex flex-col">
                     <Section heading="Extension" wallpapers={wallpapers?.extension} />
                     <Section heading="Mobile" wallpapers={wallpapers?.mobile} />
