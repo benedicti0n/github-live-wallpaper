@@ -16,7 +16,7 @@ const ConnectedPlatform = () => {
     }, [])
 
     return (
-        <div className='w-2/5 flex flex-col mt-6'>
+        <div className='w-2/5 flex flex-col h-full'>
             <h1 className="font-semibold text-3xl relative mb-4">
                 Connected Platforms
             </h1>

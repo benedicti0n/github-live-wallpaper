@@ -10,7 +10,7 @@ interface SectionProps {
 
 const Section = (props: SectionProps) => {
     return (
-        <div className="w-full flex flex-col mt-6">
+        <div className="w-full flex flex-col">
             <h1 className="font-semibold text-3xl relative mb-2">
                 {props.heading}
             </h1>
