@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { GlowEffect } from "./glow-effect";
 
 interface ButtonProps {
     text?: string;
@@ -25,15 +26,15 @@ interface IVariants {
 
 const variants: IVariants = {
     default: {
-        bg: "brightness-150 dark:brightness-100 group hover:shadow-md hover:shadow-blue-700/60 transition ease-in-out hover:scale-105 p-0.5 rounded-lg bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-600",
+        bg: "brightness-150 dark:brightness-100 group hover:shadow-lg transition ease-in-out hover:scale-105 p-0.5 rounded-lg ",
         text: "group-hover:text-blue-500 text-blue-600 gap-1"
     },
     destructive: {
-        bg: "brightness-150 dark:brightness-100 group hover:shadow-md hover:shadow-red-700/60 transition ease-in-out hover:scale-105 p-0.5 rounded-lg bg-gradient-to-br from-red-800 via-red-600 to-red-800 hover:from-red-700 hover:via-red-800 hover:to-red-600",
+        bg: "brightness-150 dark:brightness-100 group hover:shadow-lg transition ease-in-out hover:scale-105 p-0.5 rounded-lg",
         text: "group-hover:text-red-500 text-red-600 gap-1"
     },
     success: {
-        bg: "brightness-150 dark:brightness-100 group hover:shadow-md hover:shadow-green-700/60 transition ease-in-out hover:scale-105 p-0.5 rounded-lg bg-gradient-to-br from-green-800 via-green-600 to-green-800 hover:from-green-700 hover:via-green-800 hover:to-green-600",
+        bg: "brightness-150 dark:brightness-100 group hover:shadow-lg transition ease-in-out hover:scale-105 p-0.5 rounded-lg",
         text: "group-hover:text-green-500 text-green-600 gap-1"
     }
 }
@@ -51,7 +52,13 @@ const MiniButton = ({
             onClick={onClickFunction}
             type="button"
         >
-            <div className="p-1 backdrop-blur-xl bg-[#e8e8e8] rounded-md font-semibold w-full h-full">
+            <GlowEffect
+                mode='colorShift'
+                blur='soft'
+                duration={3}
+                scale={0.8}
+            />
+            <div className="p-1 backdrop-blur-xl bg-background rounded-md w-full h-full">
                 <div className={`group-hover:scale-100 flex items-center justify-center ${variants[variant].text}`}>
                     {text}
                     {children}
