@@ -6,8 +6,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body {
-  background-color: #e8e8e8;
+html {
+  background-color: var(--background);
 }
 
 @font-face {
@@ -36,14 +36,6 @@ body {
   src: url("/Fonts/Chivo/static/Chivo-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-}
-
-.clerk-custom-avatar {
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 30%;
-  margin-right: 0.5rem;
-  border: 2px solid #2563eb;
 }
 
 :root {

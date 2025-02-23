@@ -35,7 +35,7 @@ const App = () => {
     { name: 'Download', url: '/Download', icon: Briefcase },
   ]
   return (
-    <div className="w-full min-h-screen flex justify-center bg-background relative">
+    <div className="w-full min-h-screen flex justify-center relative">
       <NavBar items={navItems} />
       <DotPattern height={32} width={32} />
       <Routes>
