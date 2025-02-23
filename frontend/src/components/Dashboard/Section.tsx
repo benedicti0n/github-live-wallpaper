@@ -10,13 +10,10 @@ interface SectionProps {
 
 const Section = (props: SectionProps) => {
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="flex">
-                <h1 className="font-[ChivoMedium] text-3xl relative inline-block">
-                    <span className="w-full h-1 absolute bottom-0 shadow-md shadow-blue-700/60 rounded-lg bg-gradient-to-br from-blue-800 via-blue-600 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-600"></span>
-                    {props.heading}
-                </h1>
-            </div>
+        <div className="w-full flex flex-col mt-6">
+            <h1 className="font-semibold text-3xl relative mb-2">
+                {props.heading}
+            </h1>
             <AvailableWallpaper platform={props.heading} wallpapers={props.wallpapers} />
         </div>
     )

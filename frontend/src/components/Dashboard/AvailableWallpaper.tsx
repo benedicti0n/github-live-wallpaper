@@ -20,7 +20,7 @@ const AvailableWallpaper = (props: IPlatfromDetails) => {
     const userId = user?.id;
 
     return (
-        <div className="h-full w-full rounded-2xl py-2 mt-2 flex items-center relative">
+        <div className="h-full w-full rounded-2xl flex items-center relative">
             {props.wallpapers && props.wallpapers
                 .filter(wallpaper => wallpaper.wallpaperId && wallpaper.link[0])
                 .map((wallpaper) => (

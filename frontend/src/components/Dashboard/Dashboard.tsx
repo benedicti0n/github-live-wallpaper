@@ -49,12 +49,14 @@ const Dashboard = () => {
     }, [])
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center relative">
-            <div className="w-3/4 h-full flex flex-col justify-center items-center mt-32">
+            <div className="w-3/4 h-full flex flex-col justify-center items-center mt-24">
                 <div className="h-full w-full flex flex-col">
                     <Section heading="Extension" wallpapers={wallpapers?.extension} />
-                    <Section heading="Mobile" wallpapers={wallpapers?.mobile} />
                     <Section heading="Desktop" wallpapers={wallpapers?.desktop} />
-                    <ConnectedPlatform />
+                    <div className="flex justify-between w-full mt-3">
+                        <Section heading="Mobile" wallpapers={wallpapers?.mobile} />
+                        <ConnectedPlatform />
+                    </div>
                 </div>
             </div>
         </div>
