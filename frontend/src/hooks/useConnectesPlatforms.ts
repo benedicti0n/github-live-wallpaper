@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { IPlatforms } from "../components/Dashboard";
+interface IPlatforms {
+    id: string;
+    extension: string;
+    mobile: boolean;
+    desktop: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
