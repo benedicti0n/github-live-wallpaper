@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, ReactNode } from 'react';
 import ColorPaletteSelector from './ColorPaletteSelector';
 
 import { toPng } from 'html-to-image';
@@ -14,7 +14,9 @@ import Button from '../ui/Button';
 import { saveWallpaper } from '../Create/saveWallpaper';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
-import { Safari } from '../magicui/safari';
+import BrowserMockup from '../magicui/Mockups/BrowserMockup';
+import PhoneMockup from '../magicui/Mockups/PhoneMockup';
+import DesktopMockup from '../magicui/Mockups/DesktopMockup';
 
 const colorPallete = {
     earthTones: earthTonesPalette,
@@ -32,6 +34,10 @@ type ColorPaletteType = keyof typeof colorPallete;
 //     'https://api.codetabs.com/v1/proxy?quest=',
 //     'https://corsproxy.io/?'
 // ];
+
+interface IWrapperMockup {
+    children: ReactNode
+}
 
 const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
     const navigate = useNavigate()
@@ -125,6 +131,22 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
         }
     }, [componentRef, platform, userId]);
 
+    const WrapperMockup = ({ children }: IWrapperMockup) => platform === "extension" ? (
+        <BrowserMockup>
+            {children}
+        </BrowserMockup>
+    ) : platform === "mobile" ? (
+        <PhoneMockup>
+            {children}
+        </PhoneMockup>
+    ) : platform === "desktop" ? (
+        <DesktopMockup>
+            {children}
+        </DesktopMockup>
+    ) : <BrowserMockup>
+        {children}
+    </BrowserMockup>;
+
     // Image component with fallback and original source tracking
     const ImageUploadSection = ({ position }: { position: keyof ImageUploadState }) => (
         <>{
@@ -216,149 +238,147 @@ const GithubBento = ({ githubData }: { githubData: UserDetails }) => {
                 </div>
             </div>
 
-
             {/* Bento section with mockup */}
-            <div className="mockup-browser border-base-300 border bg-background w-9/10 min-h-screen mt-4">
-                <div className="mockup-browser-toolbar">
-                </div>
-                <div ref={componentRef} className='min-h-screen w-full flex items-center justify-center border-t' style={{
-                    backgroundImage: images.Background ?
-                        `url(${images.Background.startsWith('data:') ?
-                            images.Background :
-                            `https://api.allorigins.win/raw?url=${encodeURIComponent(images.Background)}`
-                        })` : '',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}>
-                    <div className="h-164 w-264 p-2 rounded-3xl" style={{
-                        background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
-                        boxShadow: images.Background ? "" : `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
-                        color: `${colorPallete[selectedPalette].textColor}`
+            <div className='w-full min-h-screen flex items-center justify-center'>
+                <WrapperMockup>
+                    <div ref={componentRef} className='min-h-screen w-full flex items-center justify-center' style={{
+                        backgroundImage: images.Background ?
+                            `url(${images.Background.startsWith('data:') ?
+                                images.Background :
+                                `https://api.allorigins.win/raw?url=${encodeURIComponent(images.Background)}`
+                            })` : '',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
                     }}>
-                        <div className="h-full w-full rounded-2xl flex flex-col p-2"
-                            style={{ background: `${colorPallete[selectedPalette].bgColor}` }}>
+                        <div className="h-164 w-264 p-2 rounded-3xl" style={{
+                            background: `linear-gradient(to bottom right, ${colorPallete[selectedPalette].main4}, ${colorPallete[selectedPalette].main2}, ${colorPallete[selectedPalette].main4})`,
+                            boxShadow: images.Background ? "" : `0px 10px 20px -3px ${colorPallete[selectedPalette].main3}`,
+                            color: `${colorPallete[selectedPalette].textColor}`
+                        }}>
+                            <div className="h-full w-full rounded-2xl flex flex-col p-2"
+                                style={{ background: `${colorPallete[selectedPalette].bgColor}` }}>
 
-                            {/* upper section */}
-                            <div className="h-7/10 w-full mb-2 rounded-t-2xl flex">
+                                {/* upper section */}
+                                <div className="h-7/10 w-full mb-2 rounded-t-2xl flex">
 
-                                {/* profile section and stats */}
-                                <div className="w-8/10 rounded-tl-2xl mr-2 pb-2">
+                                    {/* profile section and stats */}
+                                    <div className="w-8/10 rounded-tl-2xl mr-2 pb-2">
 
-                                    {/* upper section */}
-                                    <div className="w-full h-1/2 flex justify-between">
-                                        <div className="w-1/6 mr-2 flex flex-col items-center">
-                                            <img src={`${userStats.avatarUrl}`} alt="" className="w-full rounded-2xl mb-2" crossOrigin="anonymous" />
-                                            <ImageUploadSection position="TopLeft" />
-                                        </div>
-                                        <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main1}` }}>
-                                            {/* personal details */}
-                                            <h1 className="text-2xl font-[ChivoMedium]">{userStats.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
-                                            {/* help */}
-                                            <h1 className="text-lg font-[ChivoRegular]">@{userStats.username}</h1>
-                                            <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{userStats.bio}</h1>
-                                        </div>
+                                        {/* upper section */}
+                                        <div className="w-full h-1/2 flex justify-between">
+                                            <div className="w-1/6 mr-2 flex flex-col items-center">
+                                                <img src={`${userStats.avatarUrl}`} alt="" className="w-full rounded-2xl mb-2" crossOrigin="anonymous" />
+                                                <ImageUploadSection position="TopLeft" />
+                                            </div>
+                                            <div className="w-2/6 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main1}` }}>
+                                                {/* personal details */}
+                                                <h1 className="text-2xl font-[ChivoMedium]">{userStats.name} <span className="text-sm font-[ChivoRegular]">{ }</span></h1>
+                                                {/* help */}
+                                                <h1 className="text-lg font-[ChivoRegular]">@{userStats.username}</h1>
+                                                <h1 className="h-1/2 text-xs font-[ChivoRegular] mt-4">{userStats.bio}</h1>
+                                            </div>
 
-                                        {/* place, time, followers */}
-                                        <div className="w-2/6 h-full ml-2 flex flex-col">
-                                            <div className="flex h-1/2">
-                                                <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col w-full" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                    <h1 className="w-full flex text-sm font-[ChivoThin] items-center "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
-                                                    <h1 className="text-sm pt-2 font-[ChivoMedium] ">
-                                                        {userStats.location}
-                                                    </h1>
+                                            {/* place, time, followers */}
+                                            <div className="w-2/6 h-full ml-2 flex flex-col">
+                                                <div className="flex h-1/2">
+                                                    <div className="rounded-xl p-4 mr-2 mb-2 flex flex-col w-full" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                        <h1 className="w-full flex text-sm font-[ChivoThin] items-center "><LucideMapPinHouse className="h-4 w-4 mr-1" />Location</h1>
+                                                        <h1 className="text-sm pt-2 font-[ChivoMedium] ">
+                                                            {userStats.location}
+                                                        </h1>
+                                                    </div>
+                                                    <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                        <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideFolderGit className="h-4 w-4 mr-1" />Repos</h1>
+                                                        <h1 className="text-xl pt-2 font-[ChivoMedium]">
+                                                            {userStats.totalRepositories}
+                                                        </h1>
+                                                    </div>
                                                 </div>
-                                                <div className="rounded-xl p-4 mb-2 w-full" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                    <h1 className="w-full flex text-sm font-[ChivoThin] items-center"><LucideFolderGit className="h-4 w-4 mr-1" />Repos</h1>
-                                                    <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                        {userStats.totalRepositories}
-                                                    </h1>
+
+                                                <div className="flex h-1/2">
+                                                    <div className="h-full rounded-xl p-4 mr-2 mb-2 flex flex-col" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                        <h1 className="w-full flex text-sm font-[ChivoThin] items-center"> <LucideUser className="h-4 w-4 mr-1" />Followers</h1>
+                                                        <h1 className="text-xl pt-2 font-[ChivoMedium]">
+                                                            {userStats.followersCount}
+                                                        </h1>
+                                                    </div>
+                                                    <ImageUploadSection position="TopRight" />
+                                                </div>
+                                            </div>
+                                            <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main3}` }}>
+                                                <h1 className="font-[ChivoThin] text-base">Current Streak</h1>
+                                                <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{streakStats.currentStreak}</h1>
+                                                {/* help */}
+                                            </div>
+                                        </div>
+
+                                        {/* lower section */}
+                                        <div className="w-full h-1/2 flex mt-2">
+                                            <div className="w-1/5 mr-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main3}` }}>
+                                                <h1 className="font-[ChivoThin] text-base">Longest Streak</h1>
+                                                <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{streakStats.longestStreak}</h1>
+                                                {/* help */}
+                                            </div>
+
+                                            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-2/5 mr-2">
+                                                <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                    <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideGitCommit className="h-6 w-6 mr-1" />Commits</h1>
+                                                    <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalCommits}</h1>
+                                                </div>
+                                                <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                    <h1 className="w-full flex text-sm font-[ChivoThin]"> <LucideGitPullRequest className="h-6 w-6 mr-1" />PRs</h1>
+                                                    <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.pullRequestsCount}</h1>
+                                                </div>
+                                                <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                    <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideStar className="h-6 w-6 mr-1" />Total Stars</h1>
+                                                    <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalStars}</h1>
+                                                </div>
+                                                <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
+                                                    <h1 className="w-full flex text-sm font-[ChivoThin] items-center">  <LucideGitCommitVertical className="h-6 w-6 mr-1" />Total Commits</h1>
+                                                    <h1 className="text-lg pt-2 font-[ChivoMedium]">{streakStats.totalContributions}</h1>
                                                 </div>
                                             </div>
 
-                                            <div className="flex h-1/2">
-                                                <div className="h-full rounded-xl p-4 mr-2 mb-2 flex flex-col" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                    <h1 className="w-full flex text-sm font-[ChivoThin] items-center"> <LucideUser className="h-4 w-4 mr-1" />Followers</h1>
-                                                    <h1 className="text-xl pt-2 font-[ChivoMedium]">
-                                                        {userStats.followersCount}
+                                            <div className="w-2/5 flex flex-col p-4 rounded-xl" style={{ backgroundColor: `${colorPallete[selectedPalette].main1}` }}>
+                                                <h1 className="w-full flex font-[ChivoThin] text-base"><LucideGitBranch className="h-6 w-6 mr-1" />Total Contribution and Orgs</h1>
+                                                <div className="h-full flex mt-4">
+                                                    <h1 className="w-1/4 mr-6 text-5xl font-[ChivoMedium]">
+                                                        {userStats.contributedReposCount}
                                                     </h1>
+                                                    <div className="w-3/4 flex flex-col">
+                                                        {userStats.contributedOrganizations && userStats.contributedOrganizations.map((org: { name: string, avatarUrl: string }) => (
+                                                            <div key={org.name} className="flex mb-4">
+                                                                <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
+                                                                <span className="font-[ChivoRegular] text-sm">{org.name}</span>
+                                                            </div>
+                                                        ))}
+                                                        <LucideEllipsis className="w-6 h-6" />
+                                                    </div>
                                                 </div>
-                                                <ImageUploadSection position="TopRight" />
                                             </div>
-                                        </div>
-                                        <div className="w-1/6 h-full ml-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main3}` }}>
-                                            <h1 className="font-[ChivoThin] text-base">Current Streak</h1>
-                                            <h1 className="w-full mt-4 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideFlame className="h-12 w-12 mb-2" />{streakStats.currentStreak}</h1>
-                                            {/* help */}
                                         </div>
                                     </div>
-
-                                    {/* lower section */}
-                                    <div className="w-full h-1/2 flex mt-2">
-                                        <div className="w-1/5 mr-2 rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main3}` }}>
-                                            <h1 className="font-[ChivoThin] text-base">Longest Streak</h1>
-                                            <h1 className="w-full mt-8 flex flex-col justify-center items-center font-[ChivoMedium] text-5xl"><LucideCalendar className="h-12 w-12 mb-2" />{streakStats.longestStreak}</h1>
-                                            {/* help */}
-                                        </div>
-
-                                        <div className="grid grid-cols-2 grid-rows-2 gap-2 w-2/5 mr-2">
-                                            <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideGitCommit className="h-6 w-6 mr-1" />Commits</h1>
-                                                <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalCommits}</h1>
-                                            </div>
-                                            <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                <h1 className="w-full flex text-sm font-[ChivoThin]"> <LucideGitPullRequest className="h-6 w-6 mr-1" />PRs</h1>
-                                                <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.pullRequestsCount}</h1>
-                                            </div>
-                                            <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                <h1 className="w-full flex text-sm font-[ChivoThin]"><LucideStar className="h-6 w-6 mr-1" />Total Stars</h1>
-                                                <h1 className="text-lg pt-2 font-[ChivoMedium]">{userStats.totalStars}</h1>
-                                            </div>
-                                            <div className="rounded-xl p-4" style={{ backgroundColor: `${colorPallete[selectedPalette].main2}` }}>
-                                                <h1 className="w-full flex text-sm font-[ChivoThin] items-center">  <LucideGitCommitVertical className="h-6 w-6 mr-1" />Total Commits</h1>
-                                                <h1 className="text-lg pt-2 font-[ChivoMedium]">{streakStats.totalContributions}</h1>
-                                            </div>
-                                        </div>
-
-                                        <div className="w-2/5 flex flex-col p-4 rounded-xl" style={{ backgroundColor: `${colorPallete[selectedPalette].main1}` }}>
-                                            <h1 className="w-full flex font-[ChivoThin] text-base"><LucideGitBranch className="h-6 w-6 mr-1" />Total Contribution and Orgs</h1>
-                                            <div className="h-full flex mt-4">
-                                                <h1 className="w-1/4 mr-6 text-5xl font-[ChivoMedium]">
-                                                    {userStats.contributedReposCount}
-                                                </h1>
-                                                <div className="w-3/4 flex flex-col">
-                                                    {userStats.contributedOrganizations && userStats.contributedOrganizations.map((org: { name: string, avatarUrl: string }) => (
-                                                        <div key={org.name} className="flex mb-4">
-                                                            <img src={`${org.avatarUrl}`} alt={org.name} className="w-6 h-6 mr-2 rounded-full" crossOrigin="anonymous" />
-                                                            <span className="font-[ChivoRegular] text-sm">{org.name}</span>
-                                                        </div>
-                                                    ))}
-                                                    <LucideEllipsis className="w-6 h-6" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className='w-3/10 h-full flex'>
+                                        <ImageUploadSection position="RightSide" />
                                     </div>
                                 </div>
-                                <div className='w-3/10 h-full flex'>
-                                    <ImageUploadSection position="RightSide" />
+
+                                {/* github calender */}
+                                <div className="h-3/10 w-full rounded-xl flex justify-center items-center font-[ChivoRegular]" >
+                                    <div className='w-1/10 h-full mr-2'>
+                                        <ImageUploadSection position="BottomLeft" />
+                                    </div>
+                                    <div className="h-full w-9/10 rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete[selectedPalette].main4}` }}>
+                                        <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete[selectedPalette].githubHeatmap[0], colorPallete[selectedPalette].githubHeatmap[1], colorPallete[selectedPalette].githubHeatmap[2], colorPallete[selectedPalette].githubHeatmap[3], colorPallete[selectedPalette].githubHeatmap[4]]}
+                                            scrollbarColor1={`${colorPallete[selectedPalette].main2}`} scrollbarColor2={`${colorPallete[selectedPalette].main4}`} />
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* github calender */}
-                            <div className="h-3/10 w-full rounded-xl flex justify-center items-center font-[ChivoRegular]" >
-                                <div className='w-1/10 h-full mr-2'>
-                                    <ImageUploadSection position="BottomLeft" />
-                                </div>
-                                <div className="h-full w-9/10 rounded-xl flex flex-col justify-center items-center font-[ChivoRegular]" style={{ backgroundColor: `${colorPallete[selectedPalette].main4}` }}>
-                                    <GithubGraph username={userStats.username} blockMargin={4} colorPallete={[colorPallete[selectedPalette].githubHeatmap[0], colorPallete[selectedPalette].githubHeatmap[1], colorPallete[selectedPalette].githubHeatmap[2], colorPallete[selectedPalette].githubHeatmap[3], colorPallete[selectedPalette].githubHeatmap[4]]}
-                                        scrollbarColor1={`${colorPallete[selectedPalette].main2}`} scrollbarColor2={`${colorPallete[selectedPalette].main4}`} />
-                                </div>
-                            </div>
                         </div>
-
                     </div>
-                </div>
+                </WrapperMockup>
             </div>
-
 
             <div className='w-full flex justify-center items-center mt-8'>
                 {

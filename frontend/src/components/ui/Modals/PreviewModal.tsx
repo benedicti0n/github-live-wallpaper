@@ -17,7 +17,7 @@ const PreviewModal = (props: IPreviewModal) => {
 
     return (
         <div
-            className="fixed inset-0 z-50 backdrop-blur-xs flex justify-center items-center"
+            className="fixed inset-0 z-50 backdrop-blur-xs flex justify-center items-center px-32"
             onClick={props.closeModal}
         >
             {modalContent}

@@ -42,7 +42,21 @@ const CreateWallaper = () => {
                 }
 
                 {githubData ? (
-                    <GithubBento githubData={githubDataFromLocalStorage ? githubDataFromLocalStorage : githubData} />
+                    <div className='w-full mt-32 flex flex-col justify-center items-center'>
+                        <div className="mt-8 gap-2 flex w-1/3">
+                            <Input
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Enter GitHub username"
+                            />
+                            <Button text="Search" icon={<LucideSearch />} onClickFunction={() => {
+                                fetchGithubData(username);
+                                removeGithubDataFromLocalStorage();
+                            }} />
+                        </div>
+                        <GithubBento githubData={githubDataFromLocalStorage ? githubDataFromLocalStorage : githubData} />
+                    </div>
                 ) : (
                     githubData === null && <h1>User not found</h1>
                 )}
