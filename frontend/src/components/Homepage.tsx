@@ -19,7 +19,7 @@ const Homepage = () => {
     const { isSignedIn } = useSession()
     const { openSignIn } = useClerk()
 
-    const { githubData, fetchGithubData } = useGithubData()
+    const { githubData, fetchGithubData, noUserFound } = useGithubData()
     const [username, setUsername] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -83,7 +83,15 @@ const Homepage = () => {
                         </div>
                     </div>
                 )}
-            </div >
+
+                {(!isLoading && noUserFound) && (
+                    <div className='w-full flex flex-col items-center justify-center mt-4'>
+                        <h1 className="text-xl font-semibold">No user found</h1>
+                    </div>
+                )}
+
+                {/* add No user FOund text here */}
+            </div>
         </div >
     );
 };
