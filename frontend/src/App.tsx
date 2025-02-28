@@ -8,7 +8,7 @@ import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateWallaper from "./components/Create/CreateWallaper";
 
-import { Home, User, Briefcase } from 'lucide-react'
+import { Home, User, Briefcase, DollarSign } from 'lucide-react'
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -33,6 +33,7 @@ const App = () => {
     { name: 'Home', url: '/', icon: Home },
     ...(isSignedIn ? [{ name: 'Dashboard', url: '/dashboard', icon: User }] : []),
     { name: 'Download', url: '/Download', icon: Briefcase },
+    { name: 'Pricing', url: '/pricing', icon: DollarSign },
   ]
   return (
     <div className="w-full min-h-screen flex justify-center relative">

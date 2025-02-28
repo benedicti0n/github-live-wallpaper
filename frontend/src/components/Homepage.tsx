@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useClerk, useSession } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom'
 
@@ -28,6 +28,7 @@ const Homepage = () => {
         await fetchGithubData(username);
         removeGithubDataFromLocalStorage();
         setIsLoading(false);
+        window.location.reload()
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,8 +37,9 @@ const Homepage = () => {
         }
     };
 
+
     return (
-        <div className="w-full min-h-screen flex flex-col items-center relative">
+        <div className="w-full h-auto flex flex-col items-center relative">
             <div className="w-full h-full flex flex-col items-center mt-56 py-16">
                 <LineShadowText className='text-8xl font-extrabold italic' shadowColor='black'>
                     GitPaper
@@ -90,7 +92,7 @@ const Homepage = () => {
                     </div>
                 )}
 
-                {/* add No user FOund text here */}
+
             </div>
         </div >
     );
