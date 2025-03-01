@@ -24,15 +24,15 @@ const ConnectedPlatform = () => {
             <div className='w-full h-full rounded-2xl space-y-2'>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-medium text-lg'>Extension</h1>
-                    <MiniButton variant={platforms?.extension ? "success" : "destructive"}>{platforms?.extension ? <LucideCheck /> : <LucideX />}</MiniButton>
+                    <MiniButton text='Click to download the Extension.' variant={platforms?.extension ? "success" : "destructive"}>{platforms?.extension ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-medium text-lg'>Mobile</h1>
-                    <MiniButton variant={platforms?.mobile ? "success" : "destructive"}>{platforms?.mobile ? <LucideCheck /> : <LucideX />}</MiniButton>
+                    <MiniButton text='Click to download the Mobile app.' variant={platforms?.mobile ? "success" : "destructive"}>{platforms?.mobile ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
                 <div className='w-full flex justify-between items-center'>
                     <h1 className='font-medium text-lg'>Desktop</h1>
-                    <MiniButton variant={platforms?.desktop ? "success" : "destructive"}>{platforms?.desktop ? <LucideCheck /> : <LucideX />}</MiniButton>
+                    <MiniButton text='Click to download the Desktop app.' variant={platforms?.desktop ? "success" : "destructive"}>{platforms?.desktop ? <LucideCheck /> : <LucideX />}</MiniButton>
                 </div>
             </div>
 

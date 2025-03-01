@@ -27,7 +27,7 @@ const AvailableWallpaper = (props: IPlatfromDetails) => {
                     <WallpaperPreview key={wallpaper.wallpaperId} wallpaperId={wallpaper.wallpaperId} imageUrl={wallpaper.link[0]} platformOf={platform} userId={userId} />
                 ))}
             <div className="flex justify-center items-center">
-                <MiniButton variant="default" onClickFunction={() => navigate(`/${platform}/create`)}>
+                <MiniButton text="Add new wallpaper" variant="default" onClickFunction={() => navigate(`/${platform}/create`)}>
                     <LucidePlus className="h-6 w-6" />
                 </MiniButton>
             </div>
