@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
 interface IPhoneMockup {
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 const PhoneMockup = ({ children }: IPhoneMockup) => {

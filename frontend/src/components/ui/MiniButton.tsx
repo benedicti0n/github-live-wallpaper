@@ -1,6 +1,14 @@
 import { ReactNode } from "react";
 import { GlowEffect } from "./glow-effect";
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+
 interface ButtonProps {
     text?: string;
     icon?: ReactNode;
@@ -27,7 +35,7 @@ interface IVariants {
 const variants: IVariants = {
     default: {
         bg: "brightness-150 dark:brightness-100 group hover:shadow-lg transition ease-in-out hover:scale-105 p-0.5 rounded-lg ",
-        text: "group-hover:text-blue-500 text-blue-600 gap-1"
+        text: "text-black-600 gap-1"
     },
     destructive: {
         bg: "brightness-150 dark:brightness-100 group hover:shadow-lg transition ease-in-out hover:scale-105 p-0.5 rounded-lg",
@@ -58,11 +66,19 @@ const MiniButton = ({
                 duration={3}
                 scale={0.8}
             />
-            <div className="p-1 backdrop-blur-xl bg-background rounded-md w-full h-full">
+            <div className="p-1 backdrop-blur-xl bg-background rounded-md w-full h-full border">
                 <div className={`group-hover:scale-100 flex items-center justify-center ${variants[variant].text}`}>
-                    {text}
-                    {children}
-                    {icon}
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                {children}
+                                {icon}
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {text}
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
             </div>
         </button>
