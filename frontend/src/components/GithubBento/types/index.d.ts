@@ -9,6 +9,7 @@ export interface ImageUploadState {
 export interface UserDetails {
     name: string;
     username: string;
+    avatarUrl: string;
     bio: string | null;
     location: string | null;
     followingCount: number;
@@ -38,20 +39,7 @@ export interface UserDetails {
 
 
 type GithubData = {
-    userDetails: {
-        userStats: {
-            Followers: number;
-            Repositories: number;
-            Organizations: number;
-            Gists: number;
-            "Pull Requests": number;
-            Issues: number;
-            Commits: number;
-            Sponsors: number;
-            "Contributed To": number;
-            "Star Earned": number;
-        };
-    };
+    userDetails: UserDetails;
     streakStats: {
         totalContributions: number;
         firstDateofContribution: string; // ISO or human-readable date format
@@ -61,12 +49,6 @@ type GithubData = {
         currentStreak: number;
         currentStreakStartDate: string; // ISO or human-readable date format
         currentStreakEndDate: string; // ISO or human-readable date format
-    };
-    userBasicDetails: {
-        name: string;
-        username: string;
-        bio: string;
-        location: string;
     };
 };
 
